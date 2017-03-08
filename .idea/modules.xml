@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/IMEIDataSearch.iml" filepath="$PROJECT_DIR$/IMEIDataSearch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ElectrombileAndroidTool.iml" filepath="$PROJECT_DIR$/ElectrombileAndroidTool.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

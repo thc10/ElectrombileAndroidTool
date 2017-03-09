@@ -1,5 +1,6 @@
 package com.xiaoantech.imeidatasearch;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import com.xiaoantech.imeidatasearch.EventBusConstant;
@@ -26,6 +27,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getIMEIData();
+            }
+        });
+        Button btn_record = (Button)findViewById(R.id.btn_record);
+        btn_record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RecordSearch.class);
+                startActivity(intent);
             }
         });
     }

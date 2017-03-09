@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -16,11 +19,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 /**
  * Created by 73843 on 2017/3/8.
  */
 
 public class RecordSearch extends AppCompatActivity {
+    private ListView Lv = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,59 +113,40 @@ public class RecordSearch extends AppCompatActivity {
             }
             TextView textView = (TextView) findViewById(R.id.txt_Event1);
             textView.setText("");
-            textView = (TextView) findViewById(R.id.title_Event1);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.txt_Event2);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.title_Event2);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.txt_Event3);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.title_Event3);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.txt_Event4);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.title_Event4);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.txt_Event5);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.title_Event5);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.txt_Event6);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.title_Event6);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.txt_Event7);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.title_Event7);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.txt_Event8);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.title_Event8);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.txt_Event9);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.title_Event9);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.txt_Event10);
-            textView.setText("");
-            textView = (TextView) findViewById(R.id.title_Event10);
-            textView.setText("");
         }else{
             try {
-                JSONArray jsonArray = new JSONArray(event.getResultStr());
-                TextView textView = (TextView)findViewById(R.id.title_Event1);
-                JSONObject jsonObject = jsonArray.getJSONObject(0);
-                Long time  = jsonObject.getLong("timestamp") * 1000;
-                String date = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date(time));
-                textView.setText(date);
-                textView = (TextView)findViewById(R.id.txt_Event1);
-                String string = jsonObject.getString("event");
-                textView.setText(string);
-
-            }catch (JSONException e){
+                SimpleAdapter adapter = new SimpleAdapter(this, getData(event.getResultStr()), R.layout.item, new String[]{"time","event"}, new int[]{R.id.txt_time, R.id.txt_event});
+                Lv = (ListView)findViewById(R.id.lv);
+                Lv.setAdapter(adapter);
+            }catch (Exception e){
                 e.printStackTrace();
             }
         }
+    }
+
+    private List<Map<String, Object>> getData(String string){
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        try {
+            JSONArray jsonArray = new JSONArray(string);
+            int length = jsonArray.length();
+            int conter = 0;
+            JSONObject jsonObject = null;
+            Map<String, Object> map = new HashMap<String, Object>();
+            for (;conter < length; conter++){
+                map = new HashMap<String, Object>();
+                jsonObject = jsonArray.getJSONObject(conter);
+                Long time  = jsonObject.getLong("timestamp") * 1000;
+                String date = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date(time));
+                String event = jsonObject.getString("event");
+                map.put("time", date);
+                map.put("event", event);
+                list.add(map);
+            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+
+        return list;
     }
 }

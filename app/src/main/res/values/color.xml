@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="appOrange">#f7c035</color>
+    <color name="lightslategrey">#778899</color><!--亮蓝灰 -->
+    <color name="gainsboro">#DCDCDC</color><!--淡灰色 -->
+    <color name="white">#FFFFFF</color><!--白色 -->
 </resources>

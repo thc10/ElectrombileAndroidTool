@@ -19,7 +19,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,23 +70,57 @@ public class RecordSearch extends AppCompatActivity {
 
     public void getIMEIRecord(){
         EditText editText = (EditText)findViewById(R.id.Imeiinput);
-        String IMEI = (editText.getText()).toString();
+        String IMEI = "86506702" + (editText.getText()).toString();
         if (null != IMEI){
-            String starttime = "1488947000";
-            String endtime = "1488964282";
+            /*long curenttime = System.currentTimeMillis();
+            String endtime = String.valueOf(curenttime);
+            String starttime = String.valueOf(curenttime - 604800);*/
+            String endtime = "1489048980";
+            String starttime = "148602498";
             String url =   "http://api.xiaoan110.com:8083/v1/deviceEvent/" + IMEI + "?start=" + starttime + "&end=" + endtime;
             HttpManage.getRecordResult(url, HttpManage.RecordType.GET_RECORD);
         }else{
 
         }
     }
-
+/*
+    public String TimeUtil(int year, int mouth, int day, String Detail){
+        String Year = String.valueOf(year);
+        String Mouth = String.valueOf(mouth);
+        while (Mouth.length() <2 ){
+            Mouth = '0' + Mouth;
+        }
+        if (Mouth.compareTo("12") > 0){
+            Mouth = "12";
+        }else if (Mouth.compareTo("01") < 0){
+            Mouth = "01";
+        }
+        String Day = String.valueOf(day);
+        while (Day.length() < 2){
+            Day = '0' + Day;
+        }
+        if (Day.compareTo("31") > 0){
+            Day = "31";
+        }else if (Day.compareTo("01") < 0){
+            Day = "01";
+        }
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = Year + "-" + Mouth + "-" + Day + " " + Detail;
+        try {
+            Date date = format.parse(time);
+            return String.valueOf(date.getTime());
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+*/
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRecordGetEvent(RecordGetEvent event){
         if (event.getResultStr().indexOf("code") != -1) {
             try {
                 JSONObject result = new JSONObject(event.getResultStr());
-                TextView textView = (TextView) findViewById(R.id.txt_Event1);
+                TextView textView = (TextView) findViewById(R.id.Imeiinput);
                 int code = result.getInt("code");
                 if (code == 100) {
                     textView.setText("服务器内部错误");
@@ -111,8 +148,6 @@ public class RecordSearch extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            TextView textView = (TextView) findViewById(R.id.txt_Event1);
-            textView.setText("");
         }else{
             try {
                 SimpleAdapter adapter = new SimpleAdapter(this, getData(event.getResultStr()), R.layout.item, new String[]{"time","event"}, new int[]{R.id.txt_time, R.id.txt_event});

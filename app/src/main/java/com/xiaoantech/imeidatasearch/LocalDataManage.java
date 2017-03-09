@@ -38,7 +38,7 @@ public class LocalDataManage {
     public final String MQTTHost_Release = "mqtt.xiaoan110.com";
     public final String MQTTPort_Release = "1883";
     public final String HTTPHost_Release = "http://api.xiaoan110.com";
-    public final String HTTPPort_Release = "80";
+    public final String HTTPPort_Release = "8083";
 
     public final String MQTTHost_Test = "test.xiaoan110.com";
     public final String MQTTPort_Test = "1883";

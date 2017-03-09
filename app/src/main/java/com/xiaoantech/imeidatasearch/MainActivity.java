@@ -1,8 +1,8 @@
 package com.xiaoantech.imeidatasearch;
 
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import com.xiaoantech.imeidatasearch.EventBusConstant;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
+    String IMEI = "865067024099957";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getIMEIData();
+            }
+        });
+        Button btn_record = (Button)findViewById(R.id.btn_record);
+        btn_record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, RecordSearch.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("IMEI", getIMEI());
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }
@@ -50,11 +63,20 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
     }
 
+    public String getIMEI(){
+        return this.IMEI;
+    }
+
+    public void changeIMEI(String IMEI){
+        this.IMEI = IMEI;
+    }
+
     public void getIMEIData(){
         EditText editText = (EditText)findViewById(R.id.Imei_input);
-        String IMEI = (editText.getText()).toString();
+        IMEI = "86506702" + (editText.getText()).toString();
+        changeIMEI(IMEI);
         if (null != IMEI){
-            String url = "http://api.xiaoan110.com:8083/v1/imeiData/" + IMEI;
+            String url =   "http://api.xiaoan110.com:8083/v1/imeiData/" + IMEI;
             HttpManage.getHttpResult(url, HttpManage.getType.GET_TYPE_IMEIDATA);
         }else{
 

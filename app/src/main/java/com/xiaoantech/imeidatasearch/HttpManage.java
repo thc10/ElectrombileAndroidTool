@@ -34,4 +34,25 @@ public class HttpManage {
             }
         }).start();
     }
+    public enum RecordType{
+        GET_RECORD
+    }
+    public static void getRecordResult(final String url, final RecordType recordType){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection connection;
+                try{
+                    URL getURL = new URL(url);
+                    connection = (HttpURLConnection) getURL.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setConnectTimeout(5*1000);
+                    String result = StreamToStringUtil.StreamToString(connection.getInputStream());
+                    EventBus.getDefault().post(new RecordGetEvent(recordType, StringUtil.decodeUnicode(result), true));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 }

@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void getIMEIData(){
         EditText editText = (EditText)findViewById(R.id.Imei_input);
-        String IMEI = (editText.getText()).toString();
+        String IMEI = "86506702" + (editText.getText()).toString();
         if (null != IMEI){
             String url =   "http://api.xiaoan110.com:8083/v1/imeiData/" + IMEI;
             HttpManage.getHttpResult(url, HttpManage.getType.GET_TYPE_IMEIDATA);

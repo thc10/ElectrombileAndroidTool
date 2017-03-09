@@ -1,16 +1,12 @@
 package com.xiaoantech.imeidatasearch;
 
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -19,14 +15,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by 73843 on 2017/3/8.
@@ -38,12 +31,15 @@ public class RecordSearch extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
-
-        Button button = (Button)findViewById(R.id.btn);
+        Bundle bundle = getIntent().getExtras();
+        String IMEI = bundle.getString("IMEI");
+        getIMEIRecord(IMEI);
+        Button button = (Button)findViewById(R.id.btn_back);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getIMEIRecord();
+                Intent intent = new Intent(RecordSearch.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -68,9 +64,7 @@ public class RecordSearch extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    public void getIMEIRecord(){
-        EditText editText = (EditText)findViewById(R.id.Imeiinput);
-        String IMEI = "86506702" + (editText.getText()).toString();
+    public void getIMEIRecord(String IMEI){
         if (null != IMEI){
             long curenttime = new Date().getTime();
             curenttime = curenttime/1000;
@@ -121,9 +115,7 @@ public class RecordSearch extends AppCompatActivity {
         if (event.getResultStr().indexOf("code") != -1) {
             try {
                 JSONObject result = new JSONObject(event.getResultStr());
-                TextView textView = (TextView) findViewById(R.id.Imeiinput);
-                int code = result.getInt("code");
-                if (code == 100) {
+                /*if (code == 100) {
                     textView.setText("服务器内部错误");
                 } else if (code == 101) {
                     textView.setText("请求无IMEI");
@@ -145,7 +137,7 @@ public class RecordSearch extends AppCompatActivity {
                     textView.setText("未登录");
                 } else if (code == 110) {
                     textView.setText("操作设备不成功");
-                }
+                }*/
             } catch (JSONException e) {
                 e.printStackTrace();
             }

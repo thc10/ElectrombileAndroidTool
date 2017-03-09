@@ -32,7 +32,7 @@
                 android:layout_height="match_parent"/>
             <Button
                 android:layout_width="150px"
-                android:layout_height="80px"
+                android:layout_height="60px"
                 android:text="查询"
                 android:id="@+id/btn"
                 android:background="@drawable/btn_yellow"/>

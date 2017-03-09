@@ -17,34 +17,6 @@
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="110px"
-                android:orientation="horizontal"
-                android:background="@color/white">
-                <TextView
-                    android:layout_width="270px"
-                    android:layout_height="match_parent"
-                    android:text="86506702"
-                    android:textSize="40px"
-                    android:gravity="center"/>
-                <EditText
-                    android:id="@+id/Imeiinput"
-                    android:layout_width="280px"
-                    android:hint="请输入后7位"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:textSize="40px"/>
-                <Button
-                    android:layout_width="150px"
-                    android:layout_height="80px"
-                    android:text="查询"
-                    android:id="@+id/btn"
-                    android:background="@drawable/btn_yellow"/>
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="100px"
                 android:background="@color/white">
                 <TextView
@@ -68,11 +40,25 @@
                 android:background="@color/gainsboro"/>
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="800px"
                 android:id="@+id/lv"
                 android:background="@color/white">
             </ListView>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20px"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+                <Button
+                    android:layout_width="400px"
+                    android:layout_height="150px"
+                    android:background="@drawable/btn_yellow"
+                    android:text="返回"
+                    android:id="@+id/btn_back"/>
+            </LinearLayout>
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>

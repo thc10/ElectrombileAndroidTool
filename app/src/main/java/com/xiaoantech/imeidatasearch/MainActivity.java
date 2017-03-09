@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import com.xiaoantech.imeidatasearch.EventBusConstant;
+import com.xiaoantech.imeidatasearch.LocalDataManage;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         btn_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RecordSearch.class);
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, RecordSearch.class);
                 startActivity(intent);
             }
         });
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = (EditText)findViewById(R.id.Imei_input);
         String IMEI = (editText.getText()).toString();
         if (null != IMEI){
-            String url = "http://api.xiaoan110.com:8083/v1/imeiData/" + IMEI;
+            String url =   "http://api.xiaoan110.com:8083/v1/imeiData/" + IMEI;
             HttpManage.getHttpResult(url, HttpManage.getType.GET_TYPE_IMEIDATA);
         }else{
 

@@ -32,13 +32,16 @@ public class RecordSearch extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
         Bundle bundle = getIntent().getExtras();
-        String IMEI = bundle.getString("IMEI");
+        final String IMEI = bundle.getString("IMEI");
         getIMEIRecord(IMEI);
         Button button = (Button)findViewById(R.id.btn_back);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RecordSearch.this, MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("IMEI", IMEI);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

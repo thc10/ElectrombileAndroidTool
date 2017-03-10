@@ -45,6 +45,7 @@ public class LocalDataManage {
     public final String HTTPHost_Test = "http://test.xiaoan110.com";
     public final String HTTPPort_Test = "8081";
 
+    private String imei = "";
 
     private final String AutoLock = "AutoLock";
     private final String AutoLockPeriod = "AutoLockPeriod";
@@ -53,6 +54,14 @@ public class LocalDataManage {
 
     public void setIMEI(String imei) {
         sharedPreferences.edit().putString(IMEI,imei).apply();
+    }
+
+    public String getimei(){
+        return this.imei;
+    }
+
+    public void setimei(String imei){
+        this.imei = imei;
     }
 
     public String getIMEI() {

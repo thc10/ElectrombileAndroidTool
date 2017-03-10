@@ -1,6 +1,7 @@
 package com.xiaoantech.imeidatasearch;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -17,16 +18,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
-    String IMEI = "865067024099957";
+    String IMEI = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Bundle bundle = getIntent().getExtras();
+        final String imei = bundle.getString("IMEI");
+        if (null != imei){
+            getIMEIData(imei);
+        }
         Button button = (Button)findViewById(R.id.btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getIMEIData();
+                EditText editText = (EditText)findViewById(R.id.Imei_input);
+                IMEI = "86506702" + (editText.getText()).toString();
+                changeIMEI(IMEI);
+                getIMEIData(IMEI);
             }
         });
         Button btn_record = (Button)findViewById(R.id.btn_record);
@@ -71,10 +80,7 @@ public class MainActivity extends AppCompatActivity {
         this.IMEI = IMEI;
     }
 
-    public void getIMEIData(){
-        EditText editText = (EditText)findViewById(R.id.Imei_input);
-        IMEI = "86506702" + (editText.getText()).toString();
-        changeIMEI(IMEI);
+    public void getIMEIData(String IMEI){
         if (null != IMEI){
             String url =   "http://api.xiaoan110.com:8083/v1/imeiData/" + IMEI;
             HttpManage.getHttpResult(url, HttpManage.getType.GET_TYPE_IMEIDATA);
@@ -166,13 +172,33 @@ public class MainActivity extends AppCompatActivity {
                 textView = (TextView)findViewById(R.id.txt_speed);
                 textView.setText(Speed);
 
-                String GSM = Integer.toString(result.getInt("GSM"));
+                int gsm = result.getInt("GSM");
+                String GSM = Integer.toString(gsm);
                 textView = (TextView)findViewById(R.id.txt_GSM);
                 textView.setText(GSM);
+                if (gsm == 0){
+                    textView.setBackgroundColor(Color.parseColor("#DCDCDC"));
+                }else if (gsm <10){
+                    textView.setBackgroundColor(Color.parseColor("#FF0000"));
+                }else if (gsm < 20){
+                    textView.setBackgroundColor(Color.parseColor("#ffff00"));
+                }else if (gsm >= 20){
+                    textView.setBackgroundColor(Color.parseColor("#ADFF2F"));
+                }
 
-                String MAXGSM = Integer.toString(result.getInt("MAXGSM"));
+                int maxgsm = result.getInt("MAXGSM");
+                String MAXGSM = Integer.toString(maxgsm);
                 textView = (TextView)findViewById(R.id.txt_MAXGSM);
                 textView.setText(MAXGSM);
+                if (maxgsm == 0){
+                    textView.setBackgroundColor(Color.parseColor("#DCDCDC"));
+                }else if (maxgsm <10){
+                    textView.setBackgroundColor(Color.parseColor("#FF0000"));
+                }else if (maxgsm < 20){
+                    textView.setBackgroundColor(Color.parseColor("#ffff00"));
+                }else if (maxgsm >= 20){
+                    textView.setBackgroundColor(Color.parseColor("#ADFF2F"));
+                }
 
                 String Voltage = Integer.toString(result.getInt("voltage"));
                 textView = (TextView)findViewById(R.id.txt_voltage);

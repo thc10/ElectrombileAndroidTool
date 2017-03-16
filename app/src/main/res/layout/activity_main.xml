@@ -15,65 +15,81 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="110px"
+            android:layout_height="55dp"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="270px"
+                android:layout_width="135dp"
                 android:layout_height="match_parent"
                 android:text="86506702"
                 android:textSize="40px"
                 android:gravity="center"/>
             <EditText
                 android:id="@+id/Imei_input"
-                android:layout_width="280px"
+                android:layout_width="140dp"
                 android:hint="请输入后7位"
+                android:textColorHint="@color/lightslategrey"
                 android:textSize="40px"
                 android:background="@null"
                 android:layout_height="match_parent"/>
             <Button
-                android:layout_width="150px"
-                android:layout_height="60px"
+                android:layout_width="75dp"
+                android:layout_height="30dp"
                 android:text="查询"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/btn"
                 android:background="@drawable/btn_yellow"/>
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lightslategrey"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60px"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="200px"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="imei号"
                 android:textSize="35px" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightslategrey"/>
 
             <TextView
+                android:id="@+id/txt_Imei"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_Imei"
-                android:gravity="left"/>
+                android:gravity="left" />
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_width="350dp"
+            android:layout_height="1dp"
+            android:background="@color/lightslategrey"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60px"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="200px"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="版本号"
                 android:textSize="35px" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightslategrey"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -82,20 +98,26 @@
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_width="350dp"
+            android:layout_height="1dp"
+            android:background="@color/lightslategrey"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60px"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="200px"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="状态"
                 android:textSize="35px" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightslategrey"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -104,20 +126,26 @@
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_width="350dp"
+            android:layout_height="1dp"
+            android:background="@color/lightslategrey"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60px"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="200px"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="时间"
                 android:textSize="35px" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightslategrey"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -126,20 +154,26 @@
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_width="350dp"
+            android:layout_height="1dp"
+            android:background="@color/lightslategrey"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60px"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="200px"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="经纬度"
                 android:textSize="35px" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightslategrey"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -148,20 +182,26 @@
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_width="350dp"
+            android:layout_height="1dp"
+            android:background="@color/lightslategrey"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60px"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="200px"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="GSM信号"
                 android:textSize="35px" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightslategrey"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -170,20 +210,26 @@
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_width="350dp"
+            android:layout_height="1dp"
+            android:background="@color/lightslategrey"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60px"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="200px"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="MAXGSM"
                 android:textSize="35px" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightslategrey"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -192,20 +238,26 @@
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_width="350dp"
+            android:layout_height="1dp"
+            android:background="@color/lightslategrey"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60px"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="200px"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="电压值"
                 android:textSize="35px" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightslategrey"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -214,20 +266,26 @@
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_width="350dp"
+            android:layout_height="1dp"
+            android:background="@color/lightslategrey"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60px"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="200px"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="方向"
                 android:textSize="35px" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightslategrey"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -236,20 +294,26 @@
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_width="350dp"
+            android:layout_height="1dp"
+            android:background="@color/lightslategrey"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60px"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="200px"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="速度"
                 android:textSize="35px" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightslategrey"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -259,15 +323,17 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="30px"/>
+            android:layout_height="1dp"
+            android:background="@color/lightslategrey"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100px"
+            android:layout_height="50dp"
             android:gravity="center">
             <Button
-                android:layout_width="650px"
-                android:layout_height="90px"
+                android:layout_width="325dp"
+                android:layout_height="45dp"
                 android:background="@drawable/btn_yellow"
                 android:text="日志查询"
                 android:id="@+id/btn_record"/>

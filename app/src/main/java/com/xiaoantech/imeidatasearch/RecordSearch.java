@@ -76,7 +76,7 @@ public class RecordSearch extends AppCompatActivity {
             /*String endtime = "1489048980";
             String starttime = "148602498";*/
             String url =   "http://api.xiaoan110.com:8083/v1/deviceEvent/" + IMEI + "?start=" + starttime + "&end=" + endtime;
-            HttpManage.getRecordResult(url, HttpManage.RecordType.GET_RECORD);
+            HttpManage.getRecordResult(url, HttpManage.getType.GET_TYPE_RECORDE);
         }else{
 
         }

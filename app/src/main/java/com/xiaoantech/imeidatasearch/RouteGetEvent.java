@@ -1,15 +1,15 @@
 package com.xiaoantech.imeidatasearch;
 
 /**
- * Created by 73843 on 2017/3/9.
+ * Created by 73843 on 2017/3/16.
  */
 
-public class RecordGetEvent {
+public class RouteGetEvent {
     protected HttpManage.getType type;
     protected String resultStr;
     protected boolean isSuccess;
 
-    public RecordGetEvent(HttpManage.getType type, String resultStr, boolean isSuccess){
+    public RouteGetEvent(HttpManage.getType type, String resultStr, boolean isSuccess){
         this.type = type;
         this.resultStr = resultStr;
         this.isSuccess = isSuccess;

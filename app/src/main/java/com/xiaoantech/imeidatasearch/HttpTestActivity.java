@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -34,12 +35,27 @@ public class HttpTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_httptest);
         Bundle bundle = getIntent().getExtras();
         final String IMEI = bundle.getString("IMEI");
-        getPhonenum(IMEI);
-        Button button = (Button)findViewById(R.id.btn_test);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button btn_gettelnum =(Button)findViewById(R.id.btn_get_telnum);
+        btn_gettelnum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPhonenum(IMEI);
+            }
+        });
+        Button btn_phoneAlarm = (Button)findViewById(R.id.btn_test);
+        btn_phoneAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PhoneAlarm(IMEI);
+            }
+        });
+        Button btn_setTelNum = (Button)findViewById(R.id.btn_setTelNum);
+        btn_setTelNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText editText = (EditText)findViewById(R.id.input_tel);
+                String tel = editText.getText().toString();
+                setPhoneAlarm(IMEI, tel);
             }
         });
     }
@@ -74,13 +90,23 @@ public class HttpTestActivity extends AppCompatActivity {
 
     public void PhoneAlarm(String IMEI){
         if (null != IMEI){
-            String url =   "http://api.xiaoan110.com:8083/v1/telephone/" + "865067022382595 ";
+            String url =   "http://api.xiaoan110.com:8083/v1/telephone/" + IMEI;
             String body = "{\"caller\":\"0\"}";
             HttpManage.putPhoneAlarm(url, body, HttpManage.putType.PUT_TYPE_PHONEALRAM);
             TextView textView = (TextView)findViewById(R.id.txt_state);
             textView.setText("send put seccusse!");
         }
 
+    }
+
+    public void setPhoneAlarm(String IMEI, String tel){
+        if (null != IMEI){
+            String url =   "http://api.xiaoan110.com:8083/v1/telephone/" + IMEI;
+            String body = "{\"telephone\":\"" + tel + "\"}";
+            HttpManage.setPhoneAlarm(url, body, HttpManage.postType.POST_TYPE_SETPHONENUM);
+            TextView textView = (TextView)findViewById(R.id.txt_state);
+            textView.setText("send post seccusse!");
+        }
     }
 
     @Override

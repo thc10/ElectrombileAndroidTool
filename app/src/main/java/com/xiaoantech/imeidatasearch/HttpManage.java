@@ -25,6 +25,9 @@ public class HttpManage {
     public enum putType{
         PUT_TYPE_PHONEALRAM
     }
+    public enum postType{
+        POST_TYPE_SETPHONENUM
+    }
     public static void getHttpResult(final String url, final getType getType){
         new Thread(new Runnable() {
             @Override
@@ -115,6 +118,30 @@ public class HttpManage {
                     os.close();
                     String result = StreamToStringUtil.StreamToString(connection.getInputStream());
                     EventBus.getDefault().post(new PhoneAlramEvent(putType, StringUtil.decodeUnicode(result), true));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+    public static void setPhoneAlarm(final String url, final String body, final postType postType){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection connection;
+                try{
+                    URL getURL = new URL(url);
+                    connection = (HttpURLConnection) getURL.openConnection();
+                    connection.setRequestMethod("POST");
+                    connection.setDoOutput(true);
+                    connection.setConnectTimeout(5*1000);
+                    connection.setRequestProperty("Content-Type", "application/json");
+                    OutputStream os = connection.getOutputStream();
+                    os.write(body.getBytes());
+                    os.flush();
+                    os.close();
+                    String result = StreamToStringUtil.StreamToString(connection.getInputStream());
+                    EventBus.getDefault().post(new PhoneNumSetEvent(postType, StringUtil.decodeUnicode(result), true));
                 }catch (Exception e){
                     e.printStackTrace();
                 }

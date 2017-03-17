@@ -2,6 +2,9 @@ package com.xiaoantech.imeidatasearch;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.io.OutputStream;
+import java.io.InputStream;
+import java.io.IOException;
 import com.xiaoantech.imeidatasearch.HttpGetEvent;
 
 import com.google.zxing.common.StringUtils;
@@ -18,6 +21,9 @@ public class HttpManage {
         GET_TYPE_RECORDE,
         GET_TYPE_ROUTE,
         GET_TYPE_PHONE
+    }
+    public enum putType{
+        PUT_TYPE_PHONEALRAM
     }
     public static void getHttpResult(final String url, final getType getType){
         new Thread(new Runnable() {
@@ -85,6 +91,30 @@ public class HttpManage {
                     connection.setConnectTimeout(5*1000);
                     String result = StreamToStringUtil.StreamToString(connection.getInputStream());
                     EventBus.getDefault().post(new PhoneGetEvent(getType, StringUtil.decodeUnicode(result), true));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+    public static void putPhoneAlarm(final String url, final String body, final putType putType){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection connection;
+                try{
+                    URL getURL = new URL(url);
+                    connection = (HttpURLConnection) getURL.openConnection();
+                    connection.setRequestMethod("PUT");
+                    connection.setDoOutput(true);
+                    connection.setConnectTimeout(5*1000);
+                    connection.setRequestProperty("Content-Type", "application/json");
+                    OutputStream os = connection.getOutputStream();
+                    os.write(body.getBytes());
+                    os.flush();
+                    os.close();
+                    String result = StreamToStringUtil.StreamToString(connection.getInputStream());
+                    EventBus.getDefault().post(new PhoneAlramEvent(putType, StringUtil.decodeUnicode(result), true));
                 }catch (Exception e){
                     e.printStackTrace();
                 }

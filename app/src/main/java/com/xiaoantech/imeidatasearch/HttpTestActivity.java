@@ -35,7 +35,13 @@ public class HttpTestActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         final String IMEI = bundle.getString("IMEI");
         getPhonenum(IMEI);
-
+        Button button = (Button)findViewById(R.id.btn_test);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PhoneAlarm(IMEI);
+            }
+        });
     }
 
     public void getIMEIRoute(String IMEI){
@@ -64,6 +70,17 @@ public class HttpTestActivity extends AppCompatActivity {
         }else{
 
         }
+    }
+
+    public void PhoneAlarm(String IMEI){
+        if (null != IMEI){
+            String url =   "http://api.xiaoan110.com:8083/v1/telephone/" + "865067022382595 ";
+            String body = "{\"caller\":\"0\"}";
+            HttpManage.putPhoneAlarm(url, body, HttpManage.putType.PUT_TYPE_PHONEALRAM);
+            TextView textView = (TextView)findViewById(R.id.txt_state);
+            textView.setText("send put seccusse!");
+        }
+
     }
 
     @Override
@@ -123,6 +140,21 @@ public class HttpTestActivity extends AppCompatActivity {
             }catch (JSONException e){
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPhoneAlramEvent(PhoneAlramEvent event){
+        if (event.getResultStr().indexOf("code") != -1) {
+            try {
+                JSONObject result = new JSONObject(event.getResultStr());
+                TextView textView = (TextView)findViewById(R.id.txt);
+                textView.setText(event.getResultStr());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else{
+
         }
     }
 }

@@ -18,14 +18,14 @@
             android:layout_height="55dp"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="135dp"
+                android:layout_width="90dp"
                 android:layout_height="match_parent"
                 android:text="86506702"
                 android:textSize="40px"
                 android:gravity="center"/>
             <EditText
                 android:id="@+id/Imei_input"
-                android:layout_width="140dp"
+                android:layout_width="120dp"
                 android:hint="请输入后7位"
                 android:textColorHint="@color/lightslategrey"
                 android:textSize="40px"
@@ -35,9 +35,17 @@
                 android:layout_width="75dp"
                 android:layout_height="30dp"
                 android:text="查询"
+                android:layout_marginLeft="16dp"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/btn"
                 android:background="@drawable/btn_yellow"/>
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/img_scan_imei"
+                android:background="@drawable/img_imei_scan"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"/>
         </LinearLayout>
 
         <View

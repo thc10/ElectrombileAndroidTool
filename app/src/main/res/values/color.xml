@@ -4,4 +4,9 @@
     <color name="lightslategrey">#778899</color><!--亮蓝灰 -->
     <color name="gainsboro">#DCDCDC</color><!--淡灰色 -->
     <color name="white">#FFFFFF</color><!--白色 -->
+    <color name="viewfinder_frame">#ff000000</color>
+    <color name="viewfinder_laser">#ffff0000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="result_view">#b0000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
 </resources>

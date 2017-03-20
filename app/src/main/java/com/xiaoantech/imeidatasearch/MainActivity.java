@@ -30,7 +30,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Bundle bundle = getIntent().getExtras();
-        final String imei = bundle.getString("IMEI");
+        if (null != bundle){
+            final String imei = bundle.getString("IMEI");
+            if (null != imei){
+                getIMEIData(imei);
+            }
+        }
+        String imei = LocalDataManage.getInstance().getimei();
         if (null != imei){
             getIMEIData(imei);
         }
@@ -67,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("IMEI", getIMEI());
                 intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        View view = (View)findViewById(R.id.img_scan_imei);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
                 startActivity(intent);
             }
         });

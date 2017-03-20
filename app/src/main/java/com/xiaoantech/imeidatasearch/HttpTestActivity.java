@@ -58,6 +58,14 @@ public class HttpTestActivity extends AppCompatActivity {
                 setPhoneAlarm(IMEI, tel);
             }
         });
+        Button btn_delPhoneNum = (Button)findViewById(R.id.btn_delTelNum);
+        btn_delPhoneNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tel = "15973324498";
+                delPhoneNum(IMEI, tel);
+            }
+        });
     }
 
     public void getIMEIRoute(String IMEI){
@@ -106,6 +114,19 @@ public class HttpTestActivity extends AppCompatActivity {
             HttpManage.setPhoneAlarm(url, body, HttpManage.postType.POST_TYPE_SETPHONENUM);
             TextView textView = (TextView)findViewById(R.id.txt_state);
             textView.setText("send post seccusse!");
+        }
+    }
+
+    public void delPhoneNum(String IMEI, String tel){
+        if (null != IMEI){
+            String url =   "http://api.xiaoan110.com:8083/v1/telephone/" + IMEI;
+//            String body = "{\"telephone \":\"" + tel + "\"}";
+            String body = "{\"telephone\":\"15973324498\"}";
+            /*TextView textView1 = (TextView)findViewById(R.id.txt);
+            textView1.setText(body);*/
+            HttpManage.delPhoneNum(url, body, HttpManage.deleteType.DELETE_TYPE_PHONENUM);
+            TextView textView = (TextView)findViewById(R.id.txt_state);
+            textView.setText("send delete seccusse!"+body);
         }
     }
 
@@ -181,6 +202,21 @@ public class HttpTestActivity extends AppCompatActivity {
             }
         }else{
 
+        }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPhoneNumDelEvent(PhoneNumDelEvent event){
+        if (event.getResultStr().indexOf("code") != -1) {
+            try {
+                JSONObject result = new JSONObject(event.getResultStr());
+                TextView textView = (TextView)findViewById(R.id.txt);
+                textView.setText(event.getResultStr());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else{
+            TextView textView = (TextView)findViewById(R.id.txt);
+            textView.setText(event.getResultStr());
         }
     }
 }

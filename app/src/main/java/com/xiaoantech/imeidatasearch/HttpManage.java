@@ -28,6 +28,9 @@ public class HttpManage {
     public enum postType{
         POST_TYPE_SETPHONENUM
     }
+    public enum deleteType{
+        DELETE_TYPE_PHONENUM
+    }
     public static void getHttpResult(final String url, final getType getType){
         new Thread(new Runnable() {
             @Override
@@ -142,6 +145,30 @@ public class HttpManage {
                     os.close();
                     String result = StreamToStringUtil.StreamToString(connection.getInputStream());
                     EventBus.getDefault().post(new PhoneNumSetEvent(postType, StringUtil.decodeUnicode(result), true));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+    public static void delPhoneNum(final String url, final String body, final deleteType deleteType){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection connection;
+                try{
+                    URL getURL = new URL(url);
+                    connection = (HttpURLConnection) getURL.openConnection();
+                    connection.setRequestMethod("DELETE");
+                    connection.setDoOutput(true);
+                    connection.setConnectTimeout(5*1000);
+                    connection.setRequestProperty("Content-Type", "application/json");
+                    OutputStream os = connection.getOutputStream();
+                    os.write(body.getBytes());
+                    os.flush();
+                    os.close();
+                    String result = StreamToStringUtil.StreamToString(connection.getInputStream());
+                    EventBus.getDefault().post(new PhoneNumDelEvent(deleteType, StringUtil.decodeUnicode(result), true));
                 }catch (Exception e){
                     e.printStackTrace();
                 }

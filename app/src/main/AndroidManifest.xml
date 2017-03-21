@@ -3,6 +3,9 @@
     package="com.xiaoantech.imeidatasearch">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,12 +15,15 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".RecordSearch"
             android:label="RecordSearch"/>
+        <activity android:name=".HttpTestActivity"
+            android:label="HttpTestActivity"/>
+        <activity android:name=".CaptureActivity"
+            android:label="ScanIMEI"/>
     </application>
 
 </manifest>

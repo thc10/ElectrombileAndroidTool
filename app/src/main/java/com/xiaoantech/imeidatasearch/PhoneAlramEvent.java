@@ -1,15 +1,15 @@
 package com.xiaoantech.imeidatasearch;
 
 /**
- * Created by 73843 on 2017/3/9.
+ * Created by 73843 on 2017/3/17.
  */
 
-public class RecordGetEvent {
-    protected HttpManage.getType type;
+public class PhoneAlramEvent {
+    protected HttpManage.putType type;
     protected String resultStr;
     protected boolean isSuccess;
 
-    public RecordGetEvent(HttpManage.getType type, String resultStr, boolean isSuccess){
+    public PhoneAlramEvent(HttpManage.putType type, String resultStr, boolean isSuccess){
         this.type = type;
         this.resultStr = resultStr;
         this.isSuccess = isSuccess;
@@ -19,7 +19,7 @@ public class RecordGetEvent {
         return resultStr;
     }
 
-    public HttpManage.getType getRequestType(){
+    public HttpManage.putType getRequestType(){
         return type;
     }
 

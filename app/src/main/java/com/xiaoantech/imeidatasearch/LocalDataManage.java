@@ -45,10 +45,19 @@ public class LocalDataManage {
     public final String HTTPHost_Test = "http://test.xiaoan110.com";
     public final String HTTPPort_Test = "8081";
 
-    private String imei = "";
+    private String imei;
 
     private final String AutoLock = "AutoLock";
     private final String AutoLockPeriod = "AutoLockPeriod";
+
+    private  static LocalDataManage mInstance = null;
+
+    public static LocalDataManage getInstance() {
+        if (mInstance == null){
+            mInstance = new LocalDataManage();
+        }
+        return mInstance;
+    }
 
     private SharedPreferences sharedPreferences;
 

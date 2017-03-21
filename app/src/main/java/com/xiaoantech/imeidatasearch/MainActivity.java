@@ -1,10 +1,16 @@
 package com.xiaoantech.imeidatasearch;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +30,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Bundle bundle = getIntent().getExtras();
-        final String imei = bundle.getString("IMEI");
+        if (null != bundle){
+            final String imei = bundle.getString("IMEI");
+            if (null != imei){
+                getIMEIData(imei);
+            }
+        }
+        String imei = LocalDataManage.getInstance().getimei();
         if (null != imei){
             getIMEIData(imei);
         }
@@ -42,11 +54,33 @@ public class MainActivity extends AppCompatActivity {
         btn_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                /*Intent intent = new Intent();
                 intent.setClass(MainActivity.this, RecordSearch.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("IMEI", getIMEI());
                 intent.putExtras(bundle);
+                startActivity(intent);*/
+                AddContacts();
+            }
+        });
+        Button btn_httpTest = (Button)findViewById(R.id.btn_http);
+        btn_httpTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView textView = (TextView)findViewById(R.id.txt_state);
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, HttpTestActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("IMEI", getIMEI());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        View view = (View)findViewById(R.id.img_scan_imei);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
                 startActivity(intent);
             }
         });
@@ -223,5 +257,25 @@ public class MainActivity extends AppCompatActivity {
     public void onNoSubscriberEvent(NoSubscriberEvent event){
         TextView textView = (TextView)findViewById(R.id.txt_Imei);
         textView.setText("Nosub");
+    }
+
+    public void AddContacts(){
+        Uri uri = Uri.parse("content://com.android.contacts/raw_contacts");
+        ContentResolver resolver = getApplicationContext().getContentResolver();
+        ContentValues values = new ContentValues();
+        long contactId = ContentUris.parseId(resolver.insert(uri, values));
+
+        uri = Uri.parse("content://com.android.contacts/data");
+        values.put("raw_contact_id", contactId);
+        values.put("mimetype", "vnd.android.cursor.item/name");
+        values.put("data2", "汤汇川ya");
+        resolver.insert(uri, values);
+
+        values.clear();
+        values.put("raw_contact_id", contactId);
+        values.put("mimetype", "vnd.android.cursor.item/phone_v2");
+        values.put("data2", "2");
+        values.put("data1", "15973324498");
+        resolver.insert(uri, values);
     }
 }

@@ -32,7 +32,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback{
     private InactivityTimer inactivityTimer;
     private Vector<BarcodeFormat> decodeFormats;
     private String characterSet;
-    private SurfaceHolder surfaceHolder;
+
     private boolean hasSurface;
 
 
@@ -74,7 +74,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback{
         try {
 //            EventBus.getDefault().register(this);
             SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
-            surfaceHolder = surfaceView.getHolder();
+            SurfaceHolder surfaceHolder = surfaceView.getHolder();
 
             if (hasSurface) {
                 initCamera(surfaceHolder);
@@ -164,7 +164,8 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback{
                 Toast.makeText(this,"IMEI的长度错误或者为空",Toast.LENGTH_SHORT).show();
             }else {
                 LocalDataManage.getInstance().setimei(IMEI);
-                Log.e("ERROR", IMEI);
+                Intent intent = new Intent(CaptureActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         }
 

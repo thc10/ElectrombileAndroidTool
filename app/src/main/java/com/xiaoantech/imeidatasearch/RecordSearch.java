@@ -72,7 +72,7 @@ public class RecordSearch extends AppCompatActivity {
             long curenttime = new Date().getTime();
             curenttime = curenttime/1000;
             String endtime = String.valueOf(curenttime);
-            String starttime = String.valueOf(curenttime - 604800);
+            String starttime = String.valueOf(curenttime - 86400);
             /*String endtime = "1489048980";
             String starttime = "148602498";*/
             String url =   "http://api.xiaoan110.com:8083/v1/deviceEvent/" + IMEI + "?start=" + starttime + "&end=" + endtime;
@@ -163,7 +163,7 @@ public class RecordSearch extends AppCompatActivity {
             int conter = 0;
             JSONObject jsonObject = null;
             Map<String, Object> map = new HashMap<String, Object>();
-            for (;conter < length; conter++){
+            for (conter = length - 1;conter > 0; conter--){
                 map = new HashMap<String, Object>();
                 jsonObject = jsonArray.getJSONObject(conter);
                 Long time  = jsonObject.getLong("timestamp") * 1000;

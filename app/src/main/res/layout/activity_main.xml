@@ -38,6 +38,13 @@
                 android:layout_gravity="center_vertical"
                 android:id="@+id/btn"
                 android:background="@drawable/btn_yellow"/>
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/img_imei_scan"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:id="@+id/img_scan_imei"/>
         </LinearLayout>
 
         <View
@@ -338,6 +345,7 @@
                 android:background="@drawable/btn_yellow"
                 android:text="日志查询"
                 android:id="@+id/btn_record"/>
+
         </LinearLayout>
     </LinearLayout>
 

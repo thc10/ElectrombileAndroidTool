@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import junit.framework.Test;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -15,7 +17,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -70,11 +74,15 @@ public class RecordSearch extends AppCompatActivity {
     public void getIMEIRecord(String IMEI){
         if (null != IMEI){
             long curenttime = new Date().getTime();
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            long begintime = calendar.getTimeInMillis() / 1000;
+            //long begintime = curenttime - (curenttime + 8 * 3600)%86400;
             curenttime = curenttime/1000;
             String endtime = String.valueOf(curenttime);
-            String starttime = String.valueOf(curenttime - 86400);
-            /*String endtime = "1489048980";
-            String starttime = "148602498";*/
+            String starttime = String.valueOf(begintime);
             String url =   "http://api.xiaoan110.com:8083/v1/deviceEvent/" + IMEI + "?start=" + starttime + "&end=" + endtime;
             HttpManage.getRecordResult(url, HttpManage.RecordType.GET_RECORD);
         }else{

@@ -17,10 +17,10 @@
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100px"
+                android:layout_height="50dp"
                 android:background="@color/white">
                 <TextView
-                    android:layout_width="500px"
+                    android:layout_width="250dp"
                     android:layout_height="match_parent"
                     android:text="时间"
                     android:gravity="center"/>
@@ -40,26 +40,25 @@
                 android:background="@color/gainsboro"/>
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="800px"
+                android:layout_height="400dp"
                 android:id="@+id/lv"
                 android:background="@color/white">
             </ListView>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="20px"/>
+                android:layout_height="10dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center">
                 <Button
-                    android:layout_width="400px"
-                    android:layout_height="150px"
+                    android:layout_width="200dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/btn_yellow"
                     android:text="返回"
                     android:id="@+id/btn_back"/>
             </LinearLayout>
         </LinearLayout>
-
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>

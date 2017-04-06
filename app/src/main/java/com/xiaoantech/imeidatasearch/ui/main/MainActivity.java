@@ -28,11 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Bundle bundle = getIntent().getExtras();
-        final String imei = bundle.getString("IMEI");
-        if (null != imei){
-            getIMEIData(imei);
-        }
         Button button = (Button)findViewById(R.id.btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null){
+            final String imei = bundle.getString("IMEI");
+            if (null != imei){
+                this.IMEI = imei;
+                getIMEIData(IMEI);
+            }
+        }
         subscribe();
     }
 

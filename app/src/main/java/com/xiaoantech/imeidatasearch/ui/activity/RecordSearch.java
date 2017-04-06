@@ -76,81 +76,27 @@ public class RecordSearch extends AppCompatActivity {
     public void getIMEIRecord(String IMEI){
         if (null != IMEI){
             long curenttime = new Date().getTime();
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, 0);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            long begintime = calendar.getTimeInMillis() / 1000;
-            //long begintime = curenttime - (curenttime + 8 * 3600)%86400;
             curenttime = curenttime/1000;
             String endtime = String.valueOf(curenttime);
-            String starttime = String.valueOf(begintime);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.MILLISECOND, 001);
+            String starttime = String.valueOf(cal.getTimeInMillis()/1000);
+            Button button = (Button)findViewById(R.id.btn_back);
             String url =   "http://api.xiaoan110.com:8083/v1/deviceEvent/" + IMEI + "?start=" + starttime + "&end=" + endtime;
             HttpManage.getRecordResult(url, HttpManage.RecordType.GET_RECORD);
         }else{
 
         }
     }
-/*
-    public String TimeUtil(int year, int mouth, int day, String Detail){
-        String Year = String.valueOf(year);
-        String Mouth = String.valueOf(mouth);
-        while (Mouth.length() <2 ){
-            Mouth = '0' + Mouth;
-        }
-        if (Mouth.compareTo("12") > 0){
-            Mouth = "12";
-        }else if (Mouth.compareTo("01") < 0){
-            Mouth = "01";
-        }
-        String Day = String.valueOf(day);
-        while (Day.length() < 2){
-            Day = '0' + Day;
-        }
-        if (Day.compareTo("31") > 0){
-            Day = "31";
-        }else if (Day.compareTo("01") < 0){
-            Day = "01";
-        }
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String time = Year + "-" + Mouth + "-" + Day + " " + Detail;
-        try {
-            Date date = format.parse(time);
-            return String.valueOf(date.getTime());
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
-        return "";
-    }
-*/
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRecordGetEvent(RecordGetEvent event){
         if (event.getResultStr().indexOf("code") != -1) {
             try {
                 JSONObject result = new JSONObject(event.getResultStr());
-                /*if (code == 100) {
-                    textView.setText("服务器内部错误");
-                } else if (code == 101) {
-                    textView.setText("请求无IMEI");
-                } else if (code == 102) {
-                    textView.setText("无请求内容");
-                } else if (code == 103) {
-                    textView.setText("请求内容错误");
-                } else if (code == 104) {
-                    textView.setText("请求URL错误");
-                } else if (code == 105) {
-                    textView.setText("请求范围过大");
-                } else if (code == 106) {
-                    textView.setText("simcom服务器无响应");
-                } else if (code == 107) {
-                    textView.setText("simcom服务器不在线");
-                } else if (code == 108) {
-                    textView.setText("设备无响应");
-                } else if (code == 109) {
-                    textView.setText("未登录");
-                } else if (code == 110) {
-                    textView.setText("操作设备不成功");
-                }*/
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

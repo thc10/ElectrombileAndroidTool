@@ -42,12 +42,14 @@ public class MainActivity extends AppCompatActivity {
         btn_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, RecordSearch.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("IMEI", getIMEI());
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if (null != IMEI){
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, RecordSearch.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("IMEI", getIMEI());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
         });
     }

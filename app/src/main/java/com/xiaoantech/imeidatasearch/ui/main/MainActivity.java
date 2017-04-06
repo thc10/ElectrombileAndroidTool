@@ -1,4 +1,4 @@
-package com.xiaoantech.imeidatasearch;
+package com.xiaoantech.imeidatasearch.ui.main;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,6 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.xiaoantech.imeidatasearch.R;
+import com.xiaoantech.imeidatasearch.ui.activity.RecordSearch;
+import com.xiaoantech.imeidatasearch.event.HttpGetEvent;
+import com.xiaoantech.imeidatasearch.http.HttpManage;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.NoSubscriberEvent;

@@ -1,4 +1,4 @@
-package com.xiaoantech.imeidatasearch;
+package com.xiaoantech.imeidatasearch.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;

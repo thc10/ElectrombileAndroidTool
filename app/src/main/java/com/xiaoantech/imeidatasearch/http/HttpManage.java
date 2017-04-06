@@ -1,12 +1,13 @@
-package com.xiaoantech.imeidatasearch;
+package com.xiaoantech.imeidatasearch.http;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import com.xiaoantech.imeidatasearch.HttpGetEvent;
 
-import com.google.zxing.common.StringUtils;
-import com.xiaoantech.imeidatasearch.StreamToStringUtil;
-import com.xiaoantech.imeidatasearch.StringUtil;
+import com.xiaoantech.imeidatasearch.event.HttpGetEvent;
+import com.xiaoantech.imeidatasearch.event.RecordGetEvent;
+import com.xiaoantech.imeidatasearch.utils.StreamToStringUtil;
+import com.xiaoantech.imeidatasearch.utils.StringUtil;
+
 import org.greenrobot.eventbus.EventBus;
 /**
  * Created by 73843 on 2017/3/6.

@@ -1,4 +1,4 @@
-package com.xiaoantech.imeidatasearch;
+package com.xiaoantech.imeidatasearch.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import junit.framework.Test;
+import com.xiaoantech.imeidatasearch.R;
+import com.xiaoantech.imeidatasearch.event.RecordGetEvent;
+import com.xiaoantech.imeidatasearch.http.HttpManage;
+import com.xiaoantech.imeidatasearch.ui.main.MainActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -17,7 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

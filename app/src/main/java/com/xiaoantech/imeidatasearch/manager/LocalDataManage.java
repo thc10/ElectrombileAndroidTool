@@ -1,4 +1,4 @@
-package com.xiaoantech.imeidatasearch;
+package com.xiaoantech.imeidatasearch.manager;
 
 import android.content.Context;
 import android.content.SharedPreferences;

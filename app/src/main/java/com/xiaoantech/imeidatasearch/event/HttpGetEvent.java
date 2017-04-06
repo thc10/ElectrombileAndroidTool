@@ -1,4 +1,6 @@
-package com.xiaoantech.imeidatasearch;
+package com.xiaoantech.imeidatasearch.event;
+
+import com.xiaoantech.imeidatasearch.http.HttpManage;
 
 /**
  * Created by 73843 on 2017/3/6.

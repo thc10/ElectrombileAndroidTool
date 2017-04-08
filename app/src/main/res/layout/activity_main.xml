@@ -29,11 +29,12 @@
                 android:hint="请输入后7位"
                 android:textColorHint="@color/lightslategrey"
                 android:textSize="40px"
-                android:background="@null"
-                android:layout_height="match_parent"/>
+                android:background="@drawable/edit_bg"
+                android:layout_height="35dp"/>
             <Button
                 android:layout_width="75dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
                 android:text="查询"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/btn"

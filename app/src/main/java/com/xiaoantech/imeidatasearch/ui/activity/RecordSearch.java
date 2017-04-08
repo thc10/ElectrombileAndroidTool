@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.xiaoantech.imeidatasearch.R;
 import com.xiaoantech.imeidatasearch.event.RecordGetEvent;
@@ -26,6 +27,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by 73843 on 2017/3/8.
@@ -39,6 +41,8 @@ public class RecordSearch extends AppCompatActivity {
         setContentView(R.layout.activity_record);
         Bundle bundle = getIntent().getExtras();
         final String IMEI = bundle.getString("IMEI");
+        final String IMEI_Short = bundle.getString("IMEI_Short");
+        Toast.makeText(RecordSearch.this, "正在查询", Toast.LENGTH_SHORT).show();
         getIMEIRecord(IMEI);
         Button button = (Button)findViewById(R.id.btn_back);
         button.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +51,7 @@ public class RecordSearch extends AppCompatActivity {
                 Intent intent = new Intent(RecordSearch.this, MainActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("IMEI", IMEI);
+                bundle.putString("IMEI_Short", IMEI_Short);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -88,7 +93,7 @@ public class RecordSearch extends AppCompatActivity {
             String url =   "http://api.xiaoan110.com:8083/v1/deviceEvent/" + IMEI + "?start=" + starttime + "&end=" + endtime;
             HttpManage.getRecordResult(url, HttpManage.RecordType.GET_RECORD);
         }else{
-
+            Toast.makeText(RecordSearch.this, "请输入IMEI号", Toast.LENGTH_SHORT).show();
         }
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -116,10 +121,17 @@ public class RecordSearch extends AppCompatActivity {
         try {
             JSONArray jsonArray = new JSONArray(string);
             int length = jsonArray.length();
+            Map<String, Object> map = new HashMap<String, Object>();
+            if (length == 0){
+                map = new HashMap<String, Object>();
+                map.put("time", "本日无设备日志");
+                list.add(map);
+                Toast.makeText(RecordSearch.this, "查询成功", Toast.LENGTH_SHORT).show();
+                return list;
+            }
             int conter = 0;
             JSONObject jsonObject = null;
-            Map<String, Object> map = new HashMap<String, Object>();
-            for (conter = length - 1;conter > 0; conter--){
+            for (conter = length - 1;; conter--){
                 map = new HashMap<String, Object>();
                 jsonObject = jsonArray.getJSONObject(conter);
                 Long time  = jsonObject.getLong("timestamp") * 1000;
@@ -128,12 +140,14 @@ public class RecordSearch extends AppCompatActivity {
                 map.put("time", date);
                 map.put("event", event);
                 list.add(map);
+                if (conter == 0){
+                    break;
+                }
             }
         }catch (JSONException e){
             e.printStackTrace();
         }
-
-
+        Toast.makeText(RecordSearch.this, "查询成功", Toast.LENGTH_SHORT).show();
         return list;
     }
 }

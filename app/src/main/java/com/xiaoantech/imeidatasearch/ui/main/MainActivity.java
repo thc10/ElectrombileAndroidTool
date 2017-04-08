@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xiaoantech.imeidatasearch.R;
 import com.xiaoantech.imeidatasearch.ui.activity.RecordSearch;
@@ -24,6 +26,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     String IMEI = null;
+    String IMEI_Short = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +36,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText editText = (EditText)findViewById(R.id.Imei_input);
-                IMEI = "86506702" + (editText.getText()).toString();
-                changeIMEI(IMEI);
-                getIMEIData(IMEI);
+                changeIMEI_Short((editText.getText()).toString());
+                IMEI = "86506702" + IMEI_Short;
+                if (IMEI.length() == 15){
+                    changeIMEI(IMEI);
+                    showToast("正在查询");
+                    getIMEIData(IMEI);
+                }else {
+                    showToast("请输入正确的IMEI号");
+                }
             }
         });
         Button btn_record = (Button)findViewById(R.id.btn_record);
@@ -47,8 +56,11 @@ public class MainActivity extends AppCompatActivity {
                     intent.setClass(MainActivity.this, RecordSearch.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("IMEI", getIMEI());
+                    bundle.putString("IMEI_Short", getIMEI_Short());
                     intent.putExtras(bundle);
                     startActivity(intent);
+                }else {
+                    showToast("请输入IMEI号");
                 }
             }
         });
@@ -63,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
             if (null != imei){
                 this.IMEI = imei;
                 getIMEIData(IMEI);
+            }
+            final String imei_short = bundle.getString("IMEI_Short");
+            if (null != imei_short){
+                this.IMEI_Short = imei_short;
+                EditText editText = (EditText)findViewById(R.id.Imei_input);
+                editText.setText(imei_short);
             }
         }
         subscribe();
@@ -90,13 +108,25 @@ public class MainActivity extends AppCompatActivity {
         this.IMEI = IMEI;
     }
 
+    public String getIMEI_Short(){
+        return this.IMEI_Short;
+    }
+
+    public void changeIMEI_Short(String IMEI_Short){
+        this.IMEI_Short = IMEI_Short;
+    }
+
     public void getIMEIData(String IMEI){
         if (null != IMEI){
             String url =   "http://api.xiaoan110.com:8083/v1/imeiData/" + IMEI;
             HttpManage.getHttpResult(url, HttpManage.getType.GET_TYPE_IMEIDATA);
         }else{
-
+           showToast("请输入IMEI号");
         }
+    }
+
+    public void showToast(String errMsg){
+        Toast.makeText(MainActivity.this, errMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -107,27 +137,27 @@ public class MainActivity extends AppCompatActivity {
                 TextView textView = (TextView)findViewById(R.id.txt_state);
                 int code = result.getInt("code");
                 if (code == 100){
-                    textView.setText("服务器内部错误");
+                    showToast("服务器内部错误");
                 }else if (code == 101){
-                    textView.setText("请求无IMEI");
+                    showToast("请求无IMEI");
                 }else if (code == 102){
-                    textView.setText("无请求内容");
+                    showToast("无请求内容");
                 }else if (code == 103){
-                    textView.setText("请求内容错误");
+                    showToast("请输入正确的IMEI号");
                 }else if (code == 104){
-                    textView.setText("请求URL错误");
+                    showToast("请求URL错误");
                 }else if (code == 105){
-                    textView.setText("请求范围过大");
+                    showToast("请求范围过大");
                 }else if (code == 106){
-                    textView.setText("simcom服务器无响应");
+                    showToast("服务器无响应");
                 }else if (code == 107){
-                    textView.setText("simcom服务器不在线");
+                    showToast("服务器不在线");
                 }else if (code == 108){
-                    textView.setText("设备无响应");
+                    showToast("设备无响应");
                 }else if (code == 109){
-                    textView.setText("未登录");
+                    showToast("未登录");
                 }else if (code == 110){
-                    textView.setText("操作设备不成功");
+                    showToast("操作设备不成功");
                 }
             }catch (JSONException e){
                 e.printStackTrace();
@@ -152,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
             textView.setText("");
         }else{
             try {
+                showToast("查询成功");
                 JSONObject result = new JSONObject(event.getResultStr());
                 String IMEI = result.getString("imei");
                 TextView textView = (TextView)findViewById(R.id.txt_Imei);
@@ -227,11 +258,5 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onNoSubscriberEvent(NoSubscriberEvent event){
-        TextView textView = (TextView)findViewById(R.id.txt_Imei);
-        textView.setText("Nosub");
     }
 }

@@ -41,7 +41,6 @@ public class RecordSearch extends AppCompatActivity {
         setContentView(R.layout.activity_record);
         Bundle bundle = getIntent().getExtras();
         final String IMEI = bundle.getString("IMEI");
-        final String IMEI_Short = bundle.getString("IMEI_Short");
         Toast.makeText(RecordSearch.this, "正在查询", Toast.LENGTH_SHORT).show();
         getIMEIRecord(IMEI);
         Button button = (Button)findViewById(R.id.btn_back);
@@ -51,7 +50,6 @@ public class RecordSearch extends AppCompatActivity {
                 Intent intent = new Intent(RecordSearch.this, MainActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("IMEI", IMEI);
-                bundle.putString("IMEI_Short", IMEI_Short);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

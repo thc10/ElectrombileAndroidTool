@@ -26,18 +26,18 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     String IMEI = null;
-    String IMEI_Short = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        EditText editText = (EditText)findViewById(R.id.Imei_input);
+        editText.setText("86506702");
         Button button = (Button)findViewById(R.id.btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText editText = (EditText)findViewById(R.id.Imei_input);
-                changeIMEI_Short((editText.getText()).toString());
-                IMEI = "86506702" + IMEI_Short;
+                IMEI = (editText.getText()).toString();
                 if (IMEI.length() == 15){
                     changeIMEI(IMEI);
                     showToast("正在查询");
@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                     intent.setClass(MainActivity.this, RecordSearch.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("IMEI", getIMEI());
-                    bundle.putString("IMEI_Short", getIMEI_Short());
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }else {
@@ -75,12 +74,8 @@ public class MainActivity extends AppCompatActivity {
             if (null != imei){
                 this.IMEI = imei;
                 getIMEIData(IMEI);
-            }
-            final String imei_short = bundle.getString("IMEI_Short");
-            if (null != imei_short){
-                this.IMEI_Short = imei_short;
                 EditText editText = (EditText)findViewById(R.id.Imei_input);
-                editText.setText(imei_short);
+                editText.setText(IMEI);
             }
         }
         subscribe();
@@ -106,14 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void changeIMEI(String IMEI){
         this.IMEI = IMEI;
-    }
-
-    public String getIMEI_Short(){
-        return this.IMEI_Short;
-    }
-
-    public void changeIMEI_Short(String IMEI_Short){
-        this.IMEI_Short = IMEI_Short;
     }
 
     public void getIMEIData(String IMEI){

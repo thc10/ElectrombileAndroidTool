@@ -64,7 +64,7 @@
                 android:id="@+id/txt_Imei"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="left" />
+                android:gravity="center_vertical|left"/>
         </LinearLayout>
 
         <View
@@ -88,11 +88,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_version"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_version"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -116,11 +117,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_state"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_state"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -144,11 +146,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_time"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -172,11 +175,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_latANDlon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_latANDlon"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -200,11 +204,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_GSM"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_GSM"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -228,11 +233,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_MAXGSM"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_MAXGSM"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left"/>
         </LinearLayout>
 
         <View
@@ -256,11 +262,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_voltage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_voltage"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -284,11 +291,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_course"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_course"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -312,11 +320,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_speed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_speed"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View

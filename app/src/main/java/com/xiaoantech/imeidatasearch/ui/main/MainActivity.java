@@ -32,11 +32,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         EditText editText = (EditText)findViewById(R.id.Imei_input);
         editText.setText("86506702");
-        Button button = (Button)findViewById(R.id.btn);
+        final Button button = (Button)findViewById(R.id.btn);
+        button.setClickable(true);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText editText = (EditText)findViewById(R.id.Imei_input);
+                button.setClickable(false);
                 IMEI = (editText.getText()).toString();
                 if (IMEI.length() == 15){
                     changeIMEI(IMEI);
@@ -167,9 +169,10 @@ public class MainActivity extends AppCompatActivity {
             textView.setText("");
             textView = (TextView)findViewById(R.id.txt_voltage);
             textView.setText("");
+            Button button = (Button)findViewById(R.id.btn);
+            button.setClickable(true);
         }else{
             try {
-                showToast("查询成功");
                 JSONObject result = new JSONObject(event.getResultStr());
                 String IMEI = result.getString("imei");
                 TextView textView = (TextView)findViewById(R.id.txt_Imei);
@@ -241,6 +244,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 textView = (TextView)findViewById(R.id.txt_state);
                 textView.setText(State);
+                Button button = (Button)findViewById(R.id.btn);
+                if (button.isClickable() == false){
+                    button.setClickable(true);
+                    showToast("查询成功");
+                }
             }catch (JSONException e){
                 e.printStackTrace();
             }

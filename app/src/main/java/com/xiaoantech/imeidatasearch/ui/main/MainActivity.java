@@ -187,8 +187,8 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(Version);
 
                 Long time  = result.getLong("timestamp") * 1000;
-                String date = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date(time));
-                textView = (TextView)findViewById(R.id.txt_time);
+
+                textView = (TextView)findViewById(R.id.txt_time);String date = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date(time));
                 textView.setText(date);
 
                 String latANDlon = Double.toString(result.getDouble("latitude")) + "," +  Double.toString(result.getDouble("longitude"));

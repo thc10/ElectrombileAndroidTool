@@ -24,6 +24,7 @@ public class DateTimePickDialogUtil implements DatePicker.OnDateChangedListener,
     private AlertDialog ad;
     private String dateTime;
     private String initDateTime;
+    private String string;
     private Activity activity;
 
     public DateTimePickDialogUtil(Activity activity, String initDateTime){
@@ -47,6 +48,7 @@ public class DateTimePickDialogUtil implements DatePicker.OnDateChangedListener,
 
     public AlertDialog dateTimePickDialog(final Button inputDate){
         LinearLayout dateTimeLayout = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.dialog_datepicker, null);
+        string = inputDate.getText().toString();
         datePicker = (DatePicker) dateTimeLayout.findViewById(R.id.datepicker);
         timePicker = (TimePicker)dateTimeLayout.findViewById(R.id.timepicker);
         init(datePicker);
@@ -62,7 +64,7 @@ public class DateTimePickDialogUtil implements DatePicker.OnDateChangedListener,
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int whichButton){
-                        inputDate.setText("");
+                        inputDate.setText(string);
                     }
                 }).show();
         onDateChanged(null, 0, 0, 0);

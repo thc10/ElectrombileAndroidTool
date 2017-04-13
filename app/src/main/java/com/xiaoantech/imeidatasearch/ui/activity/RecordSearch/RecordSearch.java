@@ -57,7 +57,6 @@ public class RecordSearch extends AppCompatActivity {
         final String endTime = new java.text.SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(new java.util.Date(curenttime));
         btn_endTime.setText(endTime);
         curenttime = curenttime/1000;
-        String endtime = String.valueOf(curenttime);
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.SECOND, 0);
@@ -104,9 +103,18 @@ public class RecordSearch extends AppCompatActivity {
                     Date date1 = simpleDateFormat1.parse(endtime);
                     long endTime = date1.getTime()/1000;
                     endtime = String.valueOf(endTime);
-                    Toast.makeText(RecordSearch.this, "正在查询", Toast.LENGTH_SHORT).show();
-                    if (null != starttime && null != endtime){
-                        getIMEIRecord(IMEI, starttime, endtime);
+                    long curenttime = new Date().getTime()/1000;
+                    if (endTime > startTime){
+                        if (endTime > curenttime || startTime > curenttime){
+                            Toast.makeText(RecordSearch.this, "时间不可超过现在的时间", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(RecordSearch.this, "正在查询", Toast.LENGTH_SHORT).show();
+                            if (null != starttime && null != endtime){
+                                getIMEIRecord(IMEI, starttime, endtime);
+                            }
+                        }
+                    }else{
+                        Toast.makeText(RecordSearch.this, "起始时间不可大于结束时间", Toast.LENGTH_SHORT).show();
                     }
                 }catch (ParseException e){
                     e.printStackTrace();

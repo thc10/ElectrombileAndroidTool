@@ -57,6 +57,7 @@
                 android:background="@drawable/btn_yellow"
                 android:id="@+id/btn_endTime"/>
             <Button
+                android:layout_width="90dp"
                 android:layout_height="35dp"
                 android:layout_marginLeft="10dp"
                 android:text="查询"

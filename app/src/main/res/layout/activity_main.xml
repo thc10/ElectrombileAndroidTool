@@ -53,7 +53,7 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="imei号"
+                android:text="IMEI"
                 android:textSize="35px" />
             <View
                 android:layout_width="1dp"
@@ -82,7 +82,7 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="版本号"
+                android:text="版本"
                 android:textSize="35px" />
             <View
                 android:layout_width="1dp"
@@ -256,7 +256,7 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="电压值"
+                android:text="电压"
                 android:textSize="35px" />
             <View
                 android:layout_width="1dp"

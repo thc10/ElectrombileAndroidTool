@@ -1,4 +1,4 @@
-package com.xiaoantech.imeidatasearch;
+package com.xiaoantech.imeidatasearch.utils;
 
 /**
  * Created by 73843 on 2017/3/6.

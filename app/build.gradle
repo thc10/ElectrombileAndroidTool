@@ -1,20 +1,41 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.moallemi.advanced-build-version'
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+
+    advancedVersioning {
+        nameOptions {
+            versionMajor 1
+            versionMinor 1
+        }
+        codeOptions {
+            versionCodeType org.moallemi.gradle.internal.VersionCodeType.DATE
+        }
+        outputOptions {
+            renameOutput true
+            nameFormat '${appName}-${flavorName}-${buildType}-${versionName}'
+        }
+    }
+
+
+    def appVersionName = advancedVersioning.versionName
+    def appVersionCode = advancedVersioning.versionCode
+
     defaultConfig {
         applicationId "com.xiaoantech.imeidatasearch"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode appVersionCode
+        versionName appVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
         }
     }
 }

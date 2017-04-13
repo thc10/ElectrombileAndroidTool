@@ -8,7 +8,7 @@
     android:paddingLeft="5dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.xiaoantech.imeidatasearch.MainActivity">
+    tools:context="com.xiaoantech.imeidatasearch.ui.main.MainActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,34 +17,25 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:orientation="horizontal">
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text="86506702"
-                android:gravity="center_vertical"
-                android:textSize="40px"/>
+
             <EditText
                 android:id="@+id/Imei_input"
-                android:layout_width="120dp"
-                android:hint="请输入后7位"
+                android:layout_width="220dp"
+                android:layout_height="35dp"
+                android:background="@drawable/edit_bg"
+                android:layout_gravity="center"
+                android:hint="请输入IMEI号"
                 android:textColorHint="@color/lightslategrey"
-                android:textSize="40px"
-                android:background="@null"
-                android:layout_height="match_parent"/>
+                android:textSize="40px" />
+
             <Button
                 android:layout_width="75dp"
                 android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
                 android:text="查询"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/btn"
                 android:background="@drawable/btn_yellow"/>
-            <View
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/img_imei_scan"
-                android:layout_marginLeft="20dp"
-                android:layout_gravity="center"
-                android:id="@+id/img_scan_imei"/>
         </LinearLayout>
 
         <View
@@ -62,7 +53,7 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="imei号"
+                android:text="IMEI"
                 android:textSize="35px" />
             <View
                 android:layout_width="1dp"
@@ -73,7 +64,7 @@
                 android:id="@+id/txt_Imei"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="left" />
+                android:gravity="center_vertical|left"/>
         </LinearLayout>
 
         <View
@@ -91,17 +82,18 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="版本号"
+                android:text="版本"
                 android:textSize="35px" />
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_version"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_version"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -125,11 +117,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_state"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_state"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -153,11 +146,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_time"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -181,11 +175,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_latANDlon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_latANDlon"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -209,11 +204,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_GSM"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_GSM"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -237,11 +233,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_MAXGSM"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_MAXGSM"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left"/>
         </LinearLayout>
 
         <View
@@ -259,17 +256,18 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="电压值"
+                android:text="电压"
                 android:textSize="35px" />
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_voltage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_voltage"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -293,11 +291,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_course"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_course"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View
@@ -321,11 +320,12 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/lightslategrey"/>
+
             <TextView
+                android:id="@+id/txt_speed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txt_speed"
-                android:gravity="left"/>
+                android:gravity="center_vertical|left" />
         </LinearLayout>
 
         <View

@@ -1,4 +1,4 @@
-package com.xiaoantech.imeidatasearch.ui.activity;
+package com.xiaoantech.imeidatasearch.ui.activity.RecordSearch;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,12 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiaoantech.imeidatasearch.R;
 import com.xiaoantech.imeidatasearch.event.RecordGetEvent;
 import com.xiaoantech.imeidatasearch.http.HttpManage;
 import com.xiaoantech.imeidatasearch.ui.main.MainActivity;
+import com.xiaoantech.imeidatasearch.utils.DateTimePickDialogUtil;
+import com.xiaoantech.imeidatasearch.utils.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -21,13 +24,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by 73843 on 2017/3/8.
@@ -35,16 +39,33 @@ import java.util.Objects;
 
 public class RecordSearch extends AppCompatActivity {
     private ListView Lv = null;
+    private Button btn_startTime;
+    private Button btn_endTime;
+    private Button btn_search;
+    private Button btn_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
         Bundle bundle = getIntent().getExtras();
         final String IMEI = bundle.getString("IMEI");
-        Toast.makeText(RecordSearch.this, "正在查询", Toast.LENGTH_SHORT).show();
-        getIMEIRecord(IMEI);
-        Button button = (Button)findViewById(R.id.btn_back);
-        button.setOnClickListener(new View.OnClickListener() {
+        btn_back = (Button)findViewById(R.id.btn_back);
+        btn_startTime = (Button)findViewById(R.id.btn_startTime);
+        btn_endTime = (Button)findViewById(R.id.btn_endTime);
+        btn_search = (Button)findViewById(R.id.btn_search);
+        long curenttime = new Date().getTime();
+        final String endTime = new java.text.SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(new java.util.Date(curenttime));
+        btn_endTime.setText(endTime);
+        curenttime = curenttime/1000;
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.MILLISECOND, 001);
+        long starttime = cal.getTimeInMillis();
+        final String startTime = new java.text.SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(new java.util.Date(starttime));
+        btn_startTime.setText(startTime);
+        btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RecordSearch.this, MainActivity.class);
@@ -52,6 +73,52 @@ public class RecordSearch extends AppCompatActivity {
                 bundle.putString("IMEI", IMEI);
                 intent.putExtras(bundle);
                 startActivity(intent);
+            }
+        });
+        btn_startTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DateTimePickDialogUtil dateTimePickDialogUtil = new DateTimePickDialogUtil(RecordSearch.this, startTime);
+                dateTimePickDialogUtil.dateTimePickDialog(btn_startTime);
+            }
+        });
+        btn_endTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DateTimePickDialogUtil dateTimePickDialogUtil = new DateTimePickDialogUtil(RecordSearch.this, endTime);
+                dateTimePickDialogUtil.dateTimePickDialog(btn_endTime);
+            }
+        });
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    String starttime = btn_startTime.getText().toString();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+                    Date date = simpleDateFormat.parse(starttime);
+                    long startTime = date.getTime()/1000;
+                    starttime = String.valueOf(startTime);
+                    String endtime = btn_endTime.getText().toString();
+                    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+                    Date date1 = simpleDateFormat1.parse(endtime);
+                    long endTime = date1.getTime()/1000;
+                    endtime = String.valueOf(endTime);
+                    long curenttime = new Date().getTime()/1000;
+                    if (endTime > startTime){
+                        if (endTime > curenttime || startTime > curenttime){
+                            Toast.makeText(RecordSearch.this, "时间不可超过现在的时间", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(RecordSearch.this, "正在查询", Toast.LENGTH_SHORT).show();
+                            if (null != starttime && null != endtime){
+                                getIMEIRecord(IMEI, starttime, endtime);
+                            }
+                        }
+                    }else{
+                        Toast.makeText(RecordSearch.this, "起始时间不可大于结束时间", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (ParseException e){
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -76,18 +143,8 @@ public class RecordSearch extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    public void getIMEIRecord(String IMEI){
+    public void getIMEIRecord(String IMEI, String starttime, String endtime){
         if (null != IMEI){
-            long curenttime = new Date().getTime();
-            curenttime = curenttime/1000;
-            String endtime = String.valueOf(curenttime);
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.HOUR_OF_DAY, 0);
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MINUTE, 0);
-            cal.set(Calendar.MILLISECOND, 001);
-            String starttime = String.valueOf(cal.getTimeInMillis()/1000);
-            Button button = (Button)findViewById(R.id.btn_back);
             String url =   "http://api.xiaoan110.com:8083/v1/deviceEvent/" + IMEI + "?start=" + starttime + "&end=" + endtime;
             HttpManage.getRecordResult(url, HttpManage.RecordType.GET_RECORD);
         }else{

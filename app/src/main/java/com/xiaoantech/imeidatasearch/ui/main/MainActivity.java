@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,12 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiaoantech.imeidatasearch.R;
-import com.xiaoantech.imeidatasearch.ui.activity.RecordSearch;
+import com.xiaoantech.imeidatasearch.ui.activity.RecordSearch.RecordSearch;
 import com.xiaoantech.imeidatasearch.event.HttpGetEvent;
 import com.xiaoantech.imeidatasearch.http.HttpManage;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.NoSubscriberEvent;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;

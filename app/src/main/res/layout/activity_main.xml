@@ -16,12 +16,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="55dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/Imei_input"
                 android:layout_width="220dp"
                 android:layout_height="35dp"
+                android:layout_marginLeft="20dp"
                 android:background="@drawable/edit_bg"
                 android:layout_gravity="center"
                 android:hint="请输入IMEI号"
@@ -31,7 +33,7 @@
             <Button
                 android:layout_width="75dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="30dp"
                 android:text="查询"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/btn"
@@ -41,6 +43,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="20dp"
             android:background="@color/lightslategrey"/>
 
         <LinearLayout
@@ -184,169 +187,9 @@
         </LinearLayout>
 
         <View
-            android:layout_width="350dp"
-            android:layout_height="1dp"
-            android:background="@color/lightslategrey"
-            android:layout_gravity="center"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="GSM信号"
-                android:textSize="35px" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/lightslategrey"/>
-
-            <TextView
-                android:id="@+id/txt_GSM"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|left" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="350dp"
-            android:layout_height="1dp"
-            android:background="@color/lightslategrey"
-            android:layout_gravity="center"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="MAXGSM"
-                android:textSize="35px" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/lightslategrey"/>
-
-            <TextView
-                android:id="@+id/txt_MAXGSM"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|left"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="350dp"
-            android:layout_height="1dp"
-            android:background="@color/lightslategrey"
-            android:layout_gravity="center"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="电压"
-                android:textSize="35px" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/lightslategrey"/>
-
-            <TextView
-                android:id="@+id/txt_voltage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|left" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="350dp"
-            android:layout_height="1dp"
-            android:background="@color/lightslategrey"
-            android:layout_gravity="center"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="方向"
-                android:textSize="35px" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/lightslategrey"/>
-
-            <TextView
-                android:id="@+id/txt_course"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|left" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="350dp"
-            android:layout_height="1dp"
-            android:background="@color/lightslategrey"
-            android:layout_gravity="center"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="速度"
-                android:textSize="35px" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/lightslategrey"/>
-
-            <TextView
-                android:id="@+id/txt_speed"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|left" />
-        </LinearLayout>
-
-        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/lightslategrey"
             android:layout_gravity="center"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:layout_marginTop="10dp">
-            <Button
-                android:layout_width="325dp"
-                android:layout_height="45dp"
-                android:background="@drawable/btn_yellow"
-                android:text="日志查询"
-                android:id="@+id/btn_record"/>
-
-        </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>

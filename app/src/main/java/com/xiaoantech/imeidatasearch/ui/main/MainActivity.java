@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiaoantech.imeidatasearch.R;
-import com.xiaoantech.imeidatasearch.ui.activity.RecordSearch.RecordSearch;
 import com.xiaoantech.imeidatasearch.event.HttpGetEvent;
 import com.xiaoantech.imeidatasearch.http.HttpManage;
 
@@ -44,22 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     getIMEIData(IMEI);
                 }else {
                     showToast("请输入正确的IMEI号");
-                }
-            }
-        });
-        Button btn_record = (Button)findViewById(R.id.btn_record);
-        btn_record.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != IMEI){
-                    Intent intent = new Intent();
-                    intent.setClass(MainActivity.this, RecordSearch.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("IMEI", getIMEI());
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }else {
-                    showToast("请输入IMEI号");
+                    button.setClickable(true);
                 }
             }
         });
@@ -122,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JSONObject result = new JSONObject(event.getResultStr());
                 TextView textView = (TextView)findViewById(R.id.txt_state);
+                textView.setText("" );
                 int code = result.getInt("code");
                 if (code == 100){
                     showToast("服务器内部错误");
@@ -143,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     showToast("设备无响应");
                 }else if (code == 109){
                     showToast("未登录");
+                    textView.setText("未登录");
                 }else if (code == 110){
                     showToast("操作设备不成功");
                 }
@@ -157,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             textView.setText("");
             textView = (TextView)findViewById(R.id.txt_latANDlon);
             textView.setText("");
-            textView = (TextView)findViewById(R.id.txt_course);
+            /*textView = (TextView)findViewById(R.id.txt_course);
             textView.setText("");
             textView = (TextView)findViewById(R.id.txt_speed);
             textView.setText("");
@@ -166,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             textView = (TextView)findViewById(R.id.txt_MAXGSM);
             textView.setText("");
             textView = (TextView)findViewById(R.id.txt_voltage);
-            textView.setText("");
+            textView.setText("");*/
             Button button = (Button)findViewById(R.id.btn);
             button.setClickable(true);
         }else{
@@ -193,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 textView = (TextView)findViewById(R.id.txt_latANDlon);
                 textView.setText(latANDlon);
 
-                String Course = Integer.toString(result.getInt("course"));
+                /*String Course = Integer.toString(result.getInt("course"));
                 textView = (TextView)findViewById(R.id.txt_course);
                 textView.setText(Course);
 
@@ -231,13 +217,13 @@ public class MainActivity extends AppCompatActivity {
 
                 String Voltage = Integer.toString(result.getInt("voltage"));
                 textView = (TextView)findViewById(R.id.txt_voltage);
-                textView.setText(Voltage);
+                textView.setText(Voltage);*/
 
                 int state = result.getInt("state");
                 String State = "";
                 if (state == 1){
                     State = "online";
-                }else if(state == 2){
+                }else{
                     State = "offline";
                 }
                 textView = (TextView)findViewById(R.id.txt_state);

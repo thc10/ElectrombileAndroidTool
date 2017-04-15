@@ -106,31 +106,30 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JSONObject result = new JSONObject(event.getResultStr());
                 TextView textView = (TextView)findViewById(R.id.txt_state);
-                textView.setText("" );
+                textView.setText("");
                 int code = result.getInt("code");
                 if (code == 100){
-                    showToast("服务器内部错误");
+                    textView.setText("服务器内部错误");
                 }else if (code == 101){
-                    showToast("请求无IMEI");
+                    textView.setText("请求无IMEI");
                 }else if (code == 102){
-                    showToast("无请求内容");
+                    textView.setText("无请求内容");
                 }else if (code == 103){
-                    showToast("请输入正确的IMEI号");
+                    textView.setText("请输入正确的IMEI号");
                 }else if (code == 104){
-                    showToast("请求URL错误");
+                    textView.setText("请求URL错误");
                 }else if (code == 105){
-                    showToast("请求范围过大");
+                    textView.setText("请求范围过大");
                 }else if (code == 106){
-                    showToast("服务器无响应");
+                    textView.setText("服务器无响应");
                 }else if (code == 107){
-                    showToast("服务器不在线");
+                    textView.setText("服务器不在线");
                 }else if (code == 108){
-                    showToast("设备无响应");
+                    textView.setText("设备无响应");
                 }else if (code == 109){
-                    showToast("未登录");
                     textView.setText("未登录");
                 }else if (code == 110){
-                    showToast("操作设备不成功");
+                    textView.setText("操作设备不成功");
                 }
             }catch (JSONException e){
                 e.printStackTrace();
@@ -143,16 +142,6 @@ public class MainActivity extends AppCompatActivity {
             textView.setText("");
             textView = (TextView)findViewById(R.id.txt_latANDlon);
             textView.setText("");
-            /*textView = (TextView)findViewById(R.id.txt_course);
-            textView.setText("");
-            textView = (TextView)findViewById(R.id.txt_speed);
-            textView.setText("");
-            textView = (TextView)findViewById(R.id.txt_GSM);
-            textView.setText("");
-            textView = (TextView)findViewById(R.id.txt_MAXGSM);
-            textView.setText("");
-            textView = (TextView)findViewById(R.id.txt_voltage);
-            textView.setText("");*/
             Button button = (Button)findViewById(R.id.btn);
             button.setClickable(true);
         }else{
@@ -178,46 +167,6 @@ public class MainActivity extends AppCompatActivity {
                 String latANDlon = Double.toString(result.getDouble("latitude")) + "," +  Double.toString(result.getDouble("longitude"));
                 textView = (TextView)findViewById(R.id.txt_latANDlon);
                 textView.setText(latANDlon);
-
-                /*String Course = Integer.toString(result.getInt("course"));
-                textView = (TextView)findViewById(R.id.txt_course);
-                textView.setText(Course);
-
-                String Speed = Integer.toString(result.getInt("speed"));
-                textView = (TextView)findViewById(R.id.txt_speed);
-                textView.setText(Speed);
-
-                int gsm = result.getInt("GSM");
-                String GSM = Integer.toString(gsm);
-                textView = (TextView)findViewById(R.id.txt_GSM);
-                textView.setText(GSM);
-                if (gsm == 0){
-                    textView.setBackgroundColor(Color.parseColor("#DCDCDC"));
-                }else if (gsm <10){
-                    textView.setBackgroundColor(Color.parseColor("#FF0000"));
-                }else if (gsm < 20){
-                    textView.setBackgroundColor(Color.parseColor("#ffff00"));
-                }else if (gsm >= 20){
-                    textView.setBackgroundColor(Color.parseColor("#ADFF2F"));
-                }
-
-                int maxgsm = result.getInt("MAXGSM");
-                String MAXGSM = Integer.toString(maxgsm);
-                textView = (TextView)findViewById(R.id.txt_MAXGSM);
-                textView.setText(MAXGSM);
-                if (maxgsm == 0){
-                    textView.setBackgroundColor(Color.parseColor("#DCDCDC"));
-                }else if (maxgsm <10){
-                    textView.setBackgroundColor(Color.parseColor("#FF0000"));
-                }else if (maxgsm < 20){
-                    textView.setBackgroundColor(Color.parseColor("#ffff00"));
-                }else if (maxgsm >= 20){
-                    textView.setBackgroundColor(Color.parseColor("#ADFF2F"));
-                }
-
-                String Voltage = Integer.toString(result.getInt("voltage"));
-                textView = (TextView)findViewById(R.id.txt_voltage);
-                textView.setText(Voltage);*/
 
                 int state = result.getInt("state");
                 String State = "";

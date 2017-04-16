@@ -88,8 +88,10 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = data.getParcelableExtra(DECODED_BITMAP_KEY);
         try{
             JSONObject result = new JSONObject(content);
-            this.IMEI = result.getString("IMEI");
-            if (IMEI.length() == 15){
+            if (result.getString("IMEI").length() == 15){
+                changeIMEI(result.getString("IMEI"));
+                EditText editText = (EditText)findViewById(R.id.Imei_input);
+                editText.setText(IMEI);
                 getIMEIData(result.getString("IMEI"));
             }else {
                 showToast("IMEI错误");
@@ -192,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
             }catch (JSONException e){
                 e.printStackTrace();
             }
-            SimpleAdapter adapter = new SimpleAdapter(this, getError(ErrMsg), R.layout.item_data, new String[]{"txt_dataName", "txt_dataMsg"}, new int[]{R.id.txt_dataName, R.id.txt_dataMsg});
+            SimpleAdapter adapter = new SimpleAdapter(this, getError(IMEI, ErrMsg), R.layout.item_data, new String[]{"txt_dataName", "txt_dataMsg"}, new int[]{R.id.txt_dataName, R.id.txt_dataMsg});
             lv = (ListView)findViewById(R.id.lv_data);
             lv.setAdapter(adapter);
             /*TextView textView = (TextView)findViewById(R.id.txt_Imei);
@@ -231,9 +233,10 @@ public class MainActivity extends AppCompatActivity {
         return map;
     }
 
-    private List<Map<String, Object>> getError(String string){
+    private List<Map<String, Object>> getError(String IMEI, String ErrMsg){
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        list.add(createDataMap("Error", string));
+        list.add(createDataMap("IMEI", IMEI));
+        list.add(createDataMap("Error", ErrMsg));
         return list;
     }
 

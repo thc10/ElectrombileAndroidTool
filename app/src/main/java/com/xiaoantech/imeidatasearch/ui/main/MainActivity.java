@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiaoantech.imeidatasearch.R;
+import com.xiaoantech.imeidatasearch.event.RecordGetEvent;
 import com.xiaoantech.imeidatasearch.tool.zxing.android.CaptureActivity;
 import com.xiaoantech.imeidatasearch.ui.activity.RecordSearch.RecordSearch;
 import com.xiaoantech.imeidatasearch.event.HttpGetEvent;
@@ -23,10 +24,13 @@ import com.xiaoantech.imeidatasearch.http.HttpManage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +40,7 @@ import java.util.logging.StreamHandler;
 public class MainActivity extends AppCompatActivity {
     String IMEI = null;
     private ListView lv = null;
+    private ListView lv_record = null;
     private View view;
     private static final int REQUEST_CODE_SCAN = 0x0000;
     private static final String DECODED_CONTENT_KEY = "codedContent";
@@ -73,40 +78,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_SCAN);
             }
         });
-        /*Button btn_record = (Button)findViewById(R.id.btn_record);
-        btn_record.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != IMEI){
-                    Intent intent = new Intent();
-                    intent.setClass(MainActivity.this, RecordSearch.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("IMEI", getIMEI());
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }else {
-                    showToast("请输入IMEI号");
-                }
-            }
-        });*/
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_SCAN && requestCode == RESULT_OK){
-            if (data != null){
-                String content = data.getStringExtra(DECODED_CONTENT_KEY);
-                Bitmap bitmap = data.getParcelableExtra(DECODED_BITMAP_KEY);
-                if (content != null){
-                    try{
-                        JSONObject result = new JSONObject(content);
-                        showToast(content);
-                    }catch (JSONException e){
-                        e.printStackTrace();
-                    }
-                }
+        // 扫描二维码/条码回传
+        String content = data.getStringExtra(DECODED_CONTENT_KEY);
+        Bitmap bitmap = data.getParcelableExtra(DECODED_BITMAP_KEY);
+        try{
+            JSONObject result = new JSONObject(content);
+            this.IMEI = result.getString("IMEI");
+            if (IMEI.length() == 15){
+                getIMEIData(result.getString("IMEI"));
+            }else {
+                showToast("IMEI错误");
             }
+        }catch (JSONException e){
+            e.printStackTrace();
         }
     }
 
@@ -152,6 +141,15 @@ public class MainActivity extends AppCompatActivity {
         if (null != IMEI){
             String url =   "http://api.xiaoan110.com:8083/v1/imeiData/" + IMEI;
             HttpManage.getHttpResult(url, HttpManage.getType.GET_TYPE_IMEIDATA);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.MILLISECOND, 001);
+            long starttime = cal.getTimeInMillis()/1000;
+            long endtime = new Date().getTime()/1000;
+            url =   "http://api.xiaoan110.com:8083/v1/deviceEvent/" + IMEI + "?start=" + starttime + "&end=" + endtime;
+            HttpManage.getRecordResult(url, HttpManage.RecordType.GET_RECORD);
         }else{
            showToast("请输入IMEI号");
         }
@@ -161,43 +159,42 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, errMsg, Toast.LENGTH_SHORT).show();
     }
 
-    public void startscan(View view){
-        //startActivityForResult(new Intent(MainActivity.this, ));
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onHttpGetEvent(HttpGetEvent event){
         if (event.getResultStr().indexOf("code") != -1){
+            String ErrMsg = "";
             try {
                 JSONObject result = new JSONObject(event.getResultStr());
-                //TextView textView = (TextView)findViewById(R.id.txt_state);
                 int code = result.getInt("code");
                 if (code == 100){
-                    showToast("服务器内部错误");
+                    ErrMsg = "服务器内部错误";
                 }else if (code == 101){
-                    showToast("请求无IMEI");
+                    ErrMsg = "请求无IMEI";
                 }else if (code == 102){
-                    showToast("无请求内容");
+                    ErrMsg = "无请求内容";
                 }else if (code == 103){
-                    showToast("请输入正确的IMEI号");
+                    ErrMsg = "请输入正确的IMEI号";
                 }else if (code == 104){
-                    showToast("请求URL错误");
+                    ErrMsg = "请求URL错误";
                 }else if (code == 105){
-                    showToast("请求范围过大");
+                    ErrMsg = "请求范围过大";
                 }else if (code == 106){
-                    showToast("服务器无响应");
+                    ErrMsg = "服务器无响应";
                 }else if (code == 107){
-                    showToast("服务器不在线");
+                    ErrMsg = "服务器不在线";
                 }else if (code == 108){
-                    showToast("设备无响应");
+                    ErrMsg = "设备无响应";
                 }else if (code == 109){
-                    showToast("未登录");
+                    ErrMsg = "未登录";
                 }else if (code == 110){
-                    showToast("操作设备不成功");
+                    ErrMsg = "操作设备不成功";
                 }
             }catch (JSONException e){
                 e.printStackTrace();
             }
+            SimpleAdapter adapter = new SimpleAdapter(this, getError(ErrMsg), R.layout.item_data, new String[]{"txt_dataName", "txt_dataMsg"}, new int[]{R.id.txt_dataName, R.id.txt_dataMsg});
+            lv = (ListView)findViewById(R.id.lv_data);
+            lv.setAdapter(adapter);
             /*TextView textView = (TextView)findViewById(R.id.txt_Imei);
             textView.setText("");
             textView = (TextView)findViewById(R.id.txt_version);
@@ -221,7 +218,6 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Button button = (Button)findViewById(R.id.btn);
             button.setClickable(true);
-            showToast("查询成功");
             SimpleAdapter adapter = new SimpleAdapter(this, getData(event.getResultStr()), R.layout.item_data, new String[]{"txt_dataName", "txt_dataMsg"}, new int[]{R.id.txt_dataName, R.id.txt_dataMsg});
             lv = (ListView)findViewById(R.id.lv_data);
             lv.setAdapter(adapter);
@@ -233,6 +229,12 @@ public class MainActivity extends AppCompatActivity {
         map.put("txt_dataName", txt_dataName);
         map.put("txt_dataMsg", txt_dataMsg);
         return map;
+    }
+
+    private List<Map<String, Object>> getError(String string){
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        list.add(createDataMap("Error", string));
+        return list;
     }
 
     private List<Map<String, Object>> getData(String string) {
@@ -301,6 +303,59 @@ public class MainActivity extends AppCompatActivity {
             String Speed = Integer.toString(result.getInt("speed"));
             list.add(createDataMap("速度", Speed));
         } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRecordGetEvent(RecordGetEvent event){
+        if (event.getResultStr().indexOf("code") != -1) {
+            try {
+                JSONObject result = new JSONObject(event.getResultStr());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else{
+            try {
+                SimpleAdapter adapter = new SimpleAdapter(this, getRecord(event.getResultStr()), R.layout.item, new String[]{"time","event"}, new int[]{R.id.txt_time, R.id.txt_event});
+                lv_record = (ListView)findViewById(R.id.lv_record);
+                lv_record.setAdapter(adapter);
+                showToast("查询成功");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private List<Map<String, Object>> getRecord(String string){
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        try {
+            JSONArray jsonArray = new JSONArray(string);
+            int length = jsonArray.length();
+            Map<String, Object> map = new HashMap<String, Object>();
+            if (length == 0){
+                map = new HashMap<String, Object>();
+                map.put("time", "本日无设备日志");
+                list.add(map);
+                return list;
+            }
+            int conter = 0;
+            JSONObject jsonObject = null;
+            for (conter = length - 1;; conter--){
+                map = new HashMap<String, Object>();
+                jsonObject = jsonArray.getJSONObject(conter);
+                Long time  = jsonObject.getLong("timestamp") * 1000;
+                String date = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date(time));
+                String event = jsonObject.getString("event");
+                map.put("time", date);
+                map.put("event", event);
+                list.add(map);
+                if (conter == 0){
+                    break;
+                }
+            }
+        }catch (JSONException e){
             e.printStackTrace();
         }
         return list;

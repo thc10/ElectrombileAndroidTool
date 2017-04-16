@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView lv = null;
     private ListView lv_record = null;
     private View view;
+    private Button btn_record;
     private static final int REQUEST_CODE_SCAN = 0x0000;
     private static final String DECODED_CONTENT_KEY = "codedContent";
     private static final String DECODED_BITMAP_KEY = "codedBitmap";
@@ -78,6 +79,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_SCAN);
             }
         });
+        btn_record = (Button)findViewById(R.id.btn_record);
+        btn_record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (IMEI == null || IMEI.length() != 15){
+                    showToast("请输入IMEI号");
+                }else{
+                    Intent intent = new Intent(MainActivity.this, RecordSearch.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("IMEI", IMEI);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -90,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
             JSONObject result = new JSONObject(content);
             this.IMEI = result.getString("IMEI");
             if (IMEI.length() == 15){
+                EditText editText = (EditText)findViewById(R.id.Imei_input);
+                editText.setText(IMEI);
                 getIMEIData(result.getString("IMEI"));
             }else {
                 showToast("IMEI错误");
@@ -141,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         if (null != IMEI){
             String url =   "http://api.xiaoan110.com:8083/v1/imeiData/" + IMEI;
             HttpManage.getHttpResult(url, HttpManage.getType.GET_TYPE_IMEIDATA);
-            Calendar cal = Calendar.getInstance();
+            /*Calendar cal = Calendar.getInstance();
             cal.set(Calendar.HOUR_OF_DAY, 0);
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MINUTE, 0);
@@ -149,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             long starttime = cal.getTimeInMillis()/1000;
             long endtime = new Date().getTime()/1000;
             url =   "http://api.xiaoan110.com:8083/v1/deviceEvent/" + IMEI + "?start=" + starttime + "&end=" + endtime;
-            HttpManage.getRecordResult(url, HttpManage.RecordType.GET_RECORD);
+            HttpManage.getRecordResult(url, HttpManage.RecordType.GET_RECORD);*/
         }else{
            showToast("请输入IMEI号");
         }
@@ -195,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
             SimpleAdapter adapter = new SimpleAdapter(this, getError(ErrMsg), R.layout.item_data, new String[]{"txt_dataName", "txt_dataMsg"}, new int[]{R.id.txt_dataName, R.id.txt_dataMsg});
             lv = (ListView)findViewById(R.id.lv_data);
             lv.setAdapter(adapter);
+            showToast("查询成功");
             /*TextView textView = (TextView)findViewById(R.id.txt_Imei);
             textView.setText("");
             textView = (TextView)findViewById(R.id.txt_version);
@@ -308,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
         return list;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    /*@Subscribe(threadMode = ThreadMode.MAIN)
     public void onRecordGetEvent(RecordGetEvent event){
         if (event.getResultStr().indexOf("code") != -1) {
             try {
@@ -359,5 +378,5 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return list;
-    }
+    }*/
 }

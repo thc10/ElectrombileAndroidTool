@@ -104,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = data.getParcelableExtra(DECODED_BITMAP_KEY);
         try{
             JSONObject result = new JSONObject(content);
-            this.IMEI = result.getString("IMEI");
-            if (IMEI.length() == 15){
+            if (result.getString("IMEI").length() == 15){
+                changeIMEI(result.getString("IMEI"));
                 EditText editText = (EditText)findViewById(R.id.Imei_input);
                 editText.setText(IMEI);
                 getIMEIData(result.getString("IMEI"));

@@ -21,6 +21,7 @@ import com.google.zxing.Result;
 import com.xiaoantech.imeidatasearch.R;
 import com.xiaoantech.imeidatasearch.tool.zxing.camera.CameraManager;
 import com.xiaoantech.imeidatasearch.tool.zxing.view.ViewfinderView;
+import com.xiaoantech.imeidatasearch.ui.main.MainActivity;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -88,7 +89,8 @@ public final class CaptureActivity extends Activity implements
 
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(CaptureActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }

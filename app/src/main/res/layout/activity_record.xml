@@ -97,6 +97,8 @@
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:scrollbarFadeDuration="0"
+                android:fadeScrollbars="false"
                 android:id="@+id/lv"
                 android:background="@color/white">
             </ListView>

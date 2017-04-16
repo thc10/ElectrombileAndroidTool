@@ -59,6 +59,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:scrollbarFadeDuration="0"
+            android:fadeScrollbars="false"
             android:background="@color/lightslategrey"/>
 
         <Button

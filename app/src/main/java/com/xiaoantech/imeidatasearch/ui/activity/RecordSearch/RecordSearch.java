@@ -110,6 +110,8 @@ public class RecordSearch extends AppCompatActivity {
                         }else {
                             Toast.makeText(RecordSearch.this, "正在查询", Toast.LENGTH_SHORT).show();
                             if (null != starttime && null != endtime){
+                                Lv = (ListView)findViewById(R.id.lv);
+                                Lv.setAdapter(null);
                                 getIMEIRecord(IMEI, starttime, endtime);
                             }
                         }

@@ -40,7 +40,6 @@ import java.util.logging.StreamHandler;
 public class MainActivity extends AppCompatActivity {
     String IMEI = null;
     private ListView lv = null;
-    private ListView lv_record = null;
     private View view;
     private Button btn_record;
     private static final int REQUEST_CODE_SCAN = 0x0000;
@@ -60,10 +59,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EditText editText = (EditText)findViewById(R.id.Imei_input);
                 button.setClickable(false);
-                IMEI = (editText.getText()).toString();
-                if (IMEI.length() == 15){
-                    changeIMEI(IMEI);
+                if ((editText.getText()).toString().length() == 15){
+                    changeIMEI((editText.getText()).toString());
                     showToast("正在查询");
+                    lv = (ListView)findViewById(R.id.lv_data);
+                    lv.setAdapter(null);
                     getIMEIData(IMEI);
                 }else {
                     showToast("请输入正确的IMEI号");

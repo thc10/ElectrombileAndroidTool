@@ -55,6 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:id="@+id/lv_data"
+            android:scrollbarFadeDuration="0"
+            android:fadeScrollbars="false"
             android:background="@color/white"></ListView>
         <View
             android:layout_width="match_parent"
@@ -91,6 +93,8 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:scrollbarFadeDuration="0"
+            android:fadeScrollbars="false"
             android:id="@+id/lv_record"
             android:background="@color/white"></ListView>
         <View

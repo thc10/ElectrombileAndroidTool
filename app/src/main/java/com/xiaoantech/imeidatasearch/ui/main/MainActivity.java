@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         EditText editText = (EditText)findViewById(R.id.Imei_input);
         editText.setText("86506702");
+        editText.clearFocus();
         final Button button = (Button)findViewById(R.id.btn);
         view = (View)findViewById(R.id.view_scan);
         button.setClickable(true);
@@ -141,6 +142,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void getIMEIData(String IMEI){
         if (null != IMEI){
+            lv = (ListView)findViewById(R.id.lv_data);
+            lv.setAdapter(null);
+            lv_record = (ListView)findViewById(R.id.lv_record);
+            lv_record.setAdapter(null);
             String url =   "http://api.xiaoan110.com:8083/v1/imeiData/" + IMEI;
             HttpManage.getHttpResult(url, HttpManage.getType.GET_TYPE_IMEIDATA);
             Calendar cal = Calendar.getInstance();

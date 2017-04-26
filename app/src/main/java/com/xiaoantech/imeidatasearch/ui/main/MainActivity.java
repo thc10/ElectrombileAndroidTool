@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.xiaoantech.imeidatasearch.R;
 import com.xiaoantech.imeidatasearch.event.RecordGetEvent;
 import com.xiaoantech.imeidatasearch.tool.zxing.android.CaptureActivity;
+import com.xiaoantech.imeidatasearch.ui.activity.IMEIBinding.IMEIBinding;
 import com.xiaoantech.imeidatasearch.ui.activity.RecordSearch.RecordSearch;
 import com.xiaoantech.imeidatasearch.event.HttpGetEvent;
 import com.xiaoantech.imeidatasearch.http.HttpManage;
@@ -74,9 +75,11 @@ public class MainActivity extends AppCompatActivity {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                /*Intent intent = new Intent();
                 intent.setClass(MainActivity.this, CaptureActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_SCAN);
+                startActivityForResult(intent, REQUEST_CODE_SCAN);*/
+                Intent intent = new Intent(MainActivity.this, IMEIBinding.class);
+                startActivity(intent);
             }
         });
         btn_record = (Button)findViewById(R.id.btn_record);

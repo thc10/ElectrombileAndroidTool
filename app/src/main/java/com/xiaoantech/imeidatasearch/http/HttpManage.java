@@ -8,6 +8,7 @@ import java.net.URL;
 
 import com.xiaoantech.imeidatasearch.event.HttpGetEvent;
 import com.xiaoantech.imeidatasearch.event.HttpPostEvent;
+import com.xiaoantech.imeidatasearch.event.HttpDeleteEvent;
 import com.xiaoantech.imeidatasearch.event.RecordGetEvent;
 import com.xiaoantech.imeidatasearch.utils.StreamToStringUtil;
 import com.xiaoantech.imeidatasearch.utils.StringUtil;
@@ -21,6 +22,7 @@ public class HttpManage {
     public enum getType{
         GET_TYPE_IMEIDATA,
         GET_TYPE_BINDING,
+        GET_TYPE_RECORD,
 
     }
     public enum RecordType{
@@ -29,6 +31,10 @@ public class HttpManage {
     public enum postType{
         POST_TYPE_BINDING,
         POST_TYPE_TELEPHONE
+    }
+    public enum deleteType{
+        DELETE_TYPE_BINDING,
+
     }
     public static void getHttpResult(final String url, final getType getType){
         new Thread(new Runnable() {
@@ -42,24 +48,6 @@ public class HttpManage {
                     connection.setConnectTimeout(5*1000);
                     String result = StreamToStringUtil.StreamToString(connection.getInputStream());
                     EventBus.getDefault().post(new HttpGetEvent(getType, StringUtil.decodeUnicode(result), true));
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-    public static void getRecordResult(final String url, final RecordType recordType){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpURLConnection connection;
-                try{
-                    URL getURL = new URL(url);
-                    connection = (HttpURLConnection) getURL.openConnection();
-                    connection.setRequestMethod("GET");
-                    connection.setConnectTimeout(5*1000);
-                    String result = StreamToStringUtil.StreamToString(connection.getInputStream());
-                    EventBus.getDefault().post(new RecordGetEvent(recordType, StringUtil.decodeUnicode(result), true));
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -101,5 +89,35 @@ public class HttpManage {
             }
         }).start();
     }
-
+    public static void deleteHttpResult(final String url, final deleteType deletetype) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection connection;
+                try {
+                    URL getURL = new URL(url);
+                    Log.e("HttpDelete","OK");
+                    connection = (HttpURLConnection) getURL.openConnection();
+                    connection.setDoOutput(true);
+                    connection.setDoInput(true);
+                    connection.setRequestMethod("DELETE");
+                    connection.setConnectTimeout(5000);
+                    connection.setUseCaches(false);        //设置不进行缓存
+                    connection.setInstanceFollowRedirects(true);
+                    connection.setRequestProperty("Content-Type", "application/json");
+                    int response = connection.getResponseCode();
+                    if (response == HttpURLConnection.HTTP_OK){
+                        String result = StreamToStringUtil.StreamToString(connection.getInputStream());
+                        EventBus.getDefault().post(new HttpDeleteEvent(deletetype,StringUtil.decodeUnicode(result),true));
+                        Log.e("Response","OK");
+                    }else {
+                        connection.disconnect();
+                        Log.e("Response","ERROR");
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 }

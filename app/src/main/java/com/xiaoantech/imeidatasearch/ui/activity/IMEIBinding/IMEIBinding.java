@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.xiaoantech.imeidatasearch.R;
+import com.xiaoantech.imeidatasearch.event.HttpDeleteEvent;
 import com.xiaoantech.imeidatasearch.event.HttpGetEvent;
 import com.xiaoantech.imeidatasearch.event.HttpPostEvent;
 import com.xiaoantech.imeidatasearch.http.HttpManage;
@@ -71,8 +72,8 @@ public class IMEIBinding extends AppCompatActivity{
                 PhoneNum = txt_phone.getText().toString();
                 IMEI = txt_IMEI.getText().toString();
                 if (PhoneNum.length() == 11 && IMEI.length() == 15){
-                    String URL = createURL(PhoneNum);
-
+                    String URL = createURL(PhoneNum) + "?imei=" + IMEI;
+                    HttpManage.deleteHttpResult(URL, HttpManage.deleteType.DELETE_TYPE_BINDING);
                 }
             }
         });
@@ -136,6 +137,14 @@ public class IMEIBinding extends AppCompatActivity{
         if (event.getRequestType() == HttpManage.getType.GET_TYPE_BINDING){
             Log.e("Result", event.getResultStr());
             Toast.makeText(IMEIBinding.this, "查询成功", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onHttpDeleteEvent(HttpDeleteEvent event){
+        if (event.getRequestType() == HttpManage.deleteType.DELETE_TYPE_BINDING){
+            Log.e("Result", event.getResultStr());
+            Toast.makeText(IMEIBinding.this, "删除成功", Toast.LENGTH_SHORT).show();
         }
     }
 }

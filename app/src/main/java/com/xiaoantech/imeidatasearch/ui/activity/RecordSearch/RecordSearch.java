@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiaoantech.imeidatasearch.R;
+import com.xiaoantech.imeidatasearch.event.HttpGetEvent;
 import com.xiaoantech.imeidatasearch.event.RecordGetEvent;
 import com.xiaoantech.imeidatasearch.http.HttpManage;
 import com.xiaoantech.imeidatasearch.ui.main.MainActivity;
@@ -148,13 +149,13 @@ public class RecordSearch extends AppCompatActivity {
     public void getIMEIRecord(String IMEI, String starttime, String endtime){
         if (null != IMEI){
             String url =   "http://api.xiaoan110.com:8083/v1/deviceEvent/" + IMEI + "?start=" + starttime + "&end=" + endtime;
-            HttpManage.getRecordResult(url, HttpManage.RecordType.GET_RECORD);
+            HttpManage.getHttpResult(url, HttpManage.getType.GET_TYPE_RECORD);
         }else{
             Toast.makeText(RecordSearch.this, "请输入IMEI号", Toast.LENGTH_SHORT).show();
         }
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onRecordGetEvent(RecordGetEvent event){
+    public void onHttpGetEvent(HttpGetEvent event){
         if (event.getResultStr().indexOf("code") != -1) {
             try {
                 JSONObject result = new JSONObject(event.getResultStr());

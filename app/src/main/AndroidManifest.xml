@@ -23,6 +23,8 @@
         <activity android:name=".tool.zxing.android.CaptureActivity"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.IMEIBinding.IMEIBinding"
+            android:label="IMEIBinding"/>
     </application>
 
 </manifest>

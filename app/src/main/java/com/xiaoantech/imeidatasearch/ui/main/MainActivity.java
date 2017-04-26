@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.xiaoantech.imeidatasearch.R;
 import com.xiaoantech.imeidatasearch.event.RecordGetEvent;
 import com.xiaoantech.imeidatasearch.tool.zxing.android.CaptureActivity;
+import com.xiaoantech.imeidatasearch.ui.activity.IMEIBinding.IMEIBinding;
 import com.xiaoantech.imeidatasearch.ui.activity.RecordSearch.RecordSearch;
 import com.xiaoantech.imeidatasearch.event.HttpGetEvent;
 import com.xiaoantech.imeidatasearch.http.HttpManage;
@@ -40,8 +41,8 @@ import java.util.logging.StreamHandler;
 public class MainActivity extends AppCompatActivity {
     String IMEI = null;
     private ListView lv = null;
-    private ListView lv_record = null;
     private View view;
+    private Button btn_record;
     private static final int REQUEST_CODE_SCAN = 0x0000;
     private static final String DECODED_CONTENT_KEY = "codedContent";
     private static final String DECODED_BITMAP_KEY = "codedBitmap";
@@ -60,10 +61,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EditText editText = (EditText)findViewById(R.id.Imei_input);
                 button.setClickable(false);
-                IMEI = (editText.getText()).toString();
-                if (IMEI.length() == 15){
-                    changeIMEI(IMEI);
+                if ((editText.getText()).toString().length() == 15){
+                    changeIMEI((editText.getText()).toString());
                     showToast("正在查询");
+                    lv = (ListView)findViewById(R.id.lv_data);
+                    lv.setAdapter(null);
                     getIMEIData(IMEI);
                 }else {
                     showToast("请输入正确的IMEI号");
@@ -74,9 +76,26 @@ public class MainActivity extends AppCompatActivity {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                /*Intent intent = new Intent();
                 intent.setClass(MainActivity.this, CaptureActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_SCAN);
+                startActivityForResult(intent, REQUEST_CODE_SCAN);*/
+                Intent intent = new Intent(MainActivity.this, IMEIBinding.class);
+                startActivity(intent);
+            }
+        });
+        btn_record = (Button)findViewById(R.id.btn_record);
+        btn_record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (IMEI == null || IMEI.length() != 15){
+                    showToast("请输入IMEI号");
+                }else{
+                    Intent intent = new Intent(MainActivity.this, RecordSearch.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("IMEI", IMEI);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -148,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             lv_record.setAdapter(null);
             String url =   "http://api.xiaoan110.com:8083/v1/imeiData/" + IMEI;
             HttpManage.getHttpResult(url, HttpManage.getType.GET_TYPE_IMEIDATA);
-            Calendar cal = Calendar.getInstance();
+            /*Calendar cal = Calendar.getInstance();
             cal.set(Calendar.HOUR_OF_DAY, 0);
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MINUTE, 0);
@@ -156,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
             long starttime = cal.getTimeInMillis()/1000;
             long endtime = new Date().getTime()/1000;
             url =   "http://api.xiaoan110.com:8083/v1/deviceEvent/" + IMEI + "?start=" + starttime + "&end=" + endtime;
-            HttpManage.getRecordResult(url, HttpManage.RecordType.GET_RECORD);
+            HttpManage.getRecordResult(url, HttpManage.RecordType.GET_RECORD);*/
         }else{
            showToast("请输入IMEI号");
         }
@@ -202,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
             SimpleAdapter adapter = new SimpleAdapter(this, getError(IMEI, ErrMsg), R.layout.item_data, new String[]{"txt_dataName", "txt_dataMsg"}, new int[]{R.id.txt_dataName, R.id.txt_dataMsg});
             lv = (ListView)findViewById(R.id.lv_data);
             lv.setAdapter(adapter);
+            showToast("查询成功");
             /*TextView textView = (TextView)findViewById(R.id.txt_Imei);
             textView.setText("");
             textView = (TextView)findViewById(R.id.txt_version);
@@ -316,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
         return list;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    /*@Subscribe(threadMode = ThreadMode.MAIN)
     public void onRecordGetEvent(RecordGetEvent event){
         if (event.getResultStr().indexOf("code") != -1) {
             try {
@@ -367,5 +387,5 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return list;
-    }
+    }*/
 }

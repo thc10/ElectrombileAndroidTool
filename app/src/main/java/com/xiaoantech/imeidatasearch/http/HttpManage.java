@@ -98,7 +98,6 @@ public class HttpManage {
                     URL getURL = new URL(url);
                     Log.e("HttpDelete","OK");
                     connection = (HttpURLConnection) getURL.openConnection();
-                    connection.setDoOutput(true);
                     connection.setDoInput(true);
                     connection.setRequestMethod("DELETE");
                     connection.setConnectTimeout(5000);
